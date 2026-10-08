@@ -1,48 +1,48 @@
-# Sun Holdings × Databricks — Applebee's
+# Sun Holdings × Databricks — Applebee’s
 
-Estructura inicial del proyecto para identificar patrones sospechosos de descuentos y propinas y priorizar su revisión. Una anomalía no constituye evidencia de fraude.
+EDA de Week 4 para entender patrones de descuentos y propinas, documentar problemas de calidad y priorizar revisiones operativas. Una anomalía no constituye evidencia de fraude.
 
-## Estado
+## Estado y resultados
 
-Este repositorio contiene la organización y documentación inicial. El pipeline, los análisis, las pruebas y los dashboards están pendientes de implementación.
+El EDA fue ejecutado en Databricks Free Edition y contrastado con los JSON originales. Se observaron **2,142,846 tickets de 127 sucursales durante 115 días**, del **28 de abril al 20 de agosto de 2026**. La automatización incremental, el modelo de detección y el dashboard operativo siguen pendientes.
 
-## Estructura
+| Indicador | Resultado | Denominador |
+|---|---:|---|
+| Tickets con algún descuento | 268,590 · 12.5343% | Todos los tickets del período |
+| Promedio diario con descuento | 12.6161% | Promedio de 115 porcentajes diarios |
+| Promedio por sucursal con descuento | 12.5964% | Promedio de 127 porcentajes por sucursal |
+| Tickets sin registros en Payments | 3,856 · 0.1800% | Todos los tickets |
+| Propina agregada negativa / cero / positiva | 1,029,262 / 1,113,581 / 3 | Todos los tickets; los pagos vacíos producen cero bajo la agregación |
+| Catálogo observado | 106 IDs · 93 nombres distintos | Conservando diferencias de mayúsculas y minúsculas |
+
+## Entregables
+
+- [Hallazgos, conclusiones y decisiones](docs/eda_week4.md).
+- [Reglas de calidad, problemas y pendientes](docs/data_quality.md).
+- [Fórmulas, denominadores y trazabilidad](docs/metodologia.md).
+- [Estructura del JSON transaccional](docs/estructura_datos.md).
+- [106 códigos y sus interpretaciones](docs/catalogo_descuentos.md). Las definiciones y autorizaciones internas no están confirmadas.
+- [Resultados agregados](reports/week4/README.md).
+- [Material de presentación](docs/presentacion/README.md): gráficas y tabla de las diapositivas 9–11.
+- [Instrucciones para Databricks Free Edition](docs/carga_free_edition.md).
+
+## Ejecución
+
+Importar individualmente los notebooks `.ipynb` de `notebooks/import/` en `Applebees_Databricks_Challenge/notebooks`. Ejecutar `00_setup_catalog`, cargar el ZIP de datos en un volumen, ejecutar `00_extract_source_data` y después `01_eda_applebees` desde la primera celda. Los ZIP genéricos de workspace dieron problemas de importación; usar los notebooks individuales.
+
+Ejemplo de configuración: `data_root=/Volumes/workspace/applebees_raw/source/applebees_source`, `output_schema=workspace.applebees_eda`. Cada ejecución genera tablas Delta con un sufijo UTC único. La versión de código guardada corrige la incompatibilidad de `errorifexists` observada en Free Edition; ver notas de validación en [calidad](docs/data_quality.md).
+
+## Organización
 
 ```text
-sun-holdings-applebees-fraud-detection/
-├── README.md
-├── .gitignore
-├── docs/
-├── notebooks/
-├── src/
-├── sql/
-├── tests/
-├── dashboards/
-└── config/
+notebooks/             Código fuente Databricks y copias IPYNB sin outputs
+docs/                  Metodología, calidad, hallazgos y presentación
+reports/week4/         Resúmenes agregados autorizados para este repositorio
+src/                   Empaquetado local de datos fuente
+config/                Configuración y rutas de ejemplo
+sql/                   Reservado para consultas operativas futuras
+tests/                 Verificación estática de la entrega
+dashboards/            Estado de visualizaciones y próximos pasos
 ```
 
-## Flujo previsto
-
-Datos de origen → Bronze → Silver validada → Gold con métricas y señales → Dashboard y cola de revisión.
-
-## Datos
-
-Los JSON originales de `Applebees_Clean_Dataset/dimensions/` y `Applebees_Clean_Dataset/facts/` se mantienen fuera del repositorio. Configurar su ruta de acceso en el entorno de Databricks antes de implementar la ingestión.
-
-No publicar datos transaccionales, información de empleados, credenciales ni exportaciones con información sensible. Los documentos originales del reto se conservan en `Additional_Information/`, fuera del repositorio.
-
-## Reglas que deben preservarse
-
-- Validar la clave candidata `BusinessDate + LocationId + Check.Id` antes de adoptarla.
-- Un `Void` representa cancelación y no implica fraude por sí solo.
-- Los valores negativos de `Payments.Gratuity` son normales en este dataset; no invertir el signo automáticamente.
-- No inferir categorías internas de `DiscountId` a partir de promociones públicas.
-- Distinguir hechos confirmados, observaciones, hipótesis, supuestos y recomendaciones.
-
-## Próximos pasos
-
-1. Definir configuración de acceso a datos y contratos de esquema.
-2. Implementar ingestión Bronze, normalización Silver y controles de calidad.
-3. Definir y validar métricas de descuentos y propinas.
-4. Construir tablas Gold, señales explicables y una cola de revisión.
-5. Crear dashboards y documentar resultados y recomendaciones.
+Los JSON originales, ZIP de datos, dimensiones de empleados, exports HTML con detalle transaccional, credenciales y evidencia individual se conservan fuera del repositorio. No se cambian sus permisos de acceso.

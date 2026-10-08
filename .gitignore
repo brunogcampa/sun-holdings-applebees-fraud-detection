@@ -33,3 +33,13 @@ htmlcov/
 .ipynb_checkpoints/
 .DS_Store
 Thumbs.db
+
+# Agregados revisados de Week 4 (sin detalle transaccional)
+!/reports/week4/*.csv
+# Evidencia privada y exportaciones con outputs
+/private/
+/entrega_week4/
+*_propina_positiva.csv
+*employee*.csv
+*empleado*.csv
+*evidence*.json
