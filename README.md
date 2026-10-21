@@ -35,14 +35,41 @@ Ejemplo de configuración: `data_root=/Volumes/workspace/applebees_raw/source/ap
 ## Organización
 
 ```text
-notebooks/             Código fuente Databricks y copias IPYNB sin outputs
-docs/                  Metodología, calidad, hallazgos y presentación
-reports/week4/         Resúmenes agregados autorizados para este repositorio
-src/                   Empaquetado local de datos fuente
-config/                Configuración y rutas de ejemplo
-sql/                   Reservado para consultas operativas futuras
-tests/                 Verificación estática de la entrega
-dashboards/            Estado de visualizaciones y próximos pasos
+databricks.yml
+resources/
+├── jobs/daily_orchestration_job.yml
+└── pipelines/lakeflow_pipeline.yml
+src/
+├── package_source_data.py
+└── transformations/
+    ├── silver/
+    │   ├── checks_clean.py
+    │   └── discount_events.py
+    └── gold/
+        ├── mv_daily_metrics.sql
+        ├── mv_location_metrics.sql
+        ├── mv_discount_catalog.sql
+        ├── mv_data_quality.sql
+        └── queries/                  Consultas del EDA para ejecutar individualmente
+notebooks/                           EDA histórico, carga y publicación manual
+docs/                                Metodología, calidad y presentación
+reports/week4/                       Resúmenes agregados
+tests/                               Verificación estática
+dashboards/                          Documentación de visualizaciones
+config/                              Notas de configuración
 ```
+
+La orquestación está en `resources/`; las definiciones de tablas están en
+`src/transformations/`. Silver conserva trazabilidad y estandariza campos; Gold
+calcula métricas para análisis. Los notebooks históricos se conservan como evidencia.
+
+**Estado de la nueva estructura:** código preparado y verificado estáticamente;
+pipeline y job aún no desplegados ni ejecutados en Databricks. La programación diaria
+está pausada. Esta primera implementación lee el período completo en batch y no se
+presenta como un pipeline incremental validado.
+
+Ver [configuración y validación del pipeline](docs/pipeline_structure.md) y
+[consultas reutilizables](src/transformations/gold/queries/README.md).
+
 
 Los JSON originales, ZIP de datos, dimensiones de empleados, exports HTML con detalle transaccional, credenciales y evidencia individual se conservan fuera del repositorio. No se cambian sus permisos de acceso.

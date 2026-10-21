@@ -1,0 +1,24 @@
+bundle:
+  name: applebees-fraud-detection
+
+include:
+  - resources/jobs/*.yml
+  - resources/pipelines/*.yml
+
+variables:
+  catalog:
+    default: workspace
+  schema:
+    description: Dedicated pipeline schema; historical EDA tables remain separate.
+    default: applebees_pipeline_dev
+  source_root:
+    default: /Volumes/workspace/applebees_raw/source/applebees_source
+  start_date:
+    default: '2026-04-28'
+  end_date:
+    default: '2026-08-20'
+
+targets:
+  dev:
+    default: true
+    mode: development

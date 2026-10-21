@@ -1,0 +1,14 @@
+resources:
+  jobs:
+    daily_orchestration_job:
+      name: applebees-daily-orchestration-${bundle.target}
+      max_concurrent_runs: 1
+      schedule:
+        quartz_cron_expression: '0 0 7 * * ?'
+        timezone_id: America/Mexico_City
+        pause_status: PAUSED
+      tasks:
+        - task_key: refresh_silver_and_gold
+          pipeline_task:
+            pipeline_id: ${resources.pipelines.applebees_eda.id}
+            full_refresh: false
