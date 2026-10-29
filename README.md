@@ -5,10 +5,11 @@ operations can prioritize unusual activity for review. An anomaly is not proof o
 
 **Verified execution on October 29, 2026:** the pipeline published all
 **2,142,846 checks** from **115 original files**, covering **127 locations and 115 days**.
-The manual publication gate passed. The complete three-task job then succeeded in
-**19 min 34 s**, with **28 passing audit results**, including the comparison with
-the prior accepted manual run. Source and published-check fingerprints match.
-The second complete job run is awaiting evidence.
+The manual publication gate passed. The complete three-task job then succeeded
+twice, in **19 min 34 s** and **21 min 23 s**. Both runs passed all **28 audit
+results**, including repeatability. Source and published-check fingerprints match
+across both complete jobs and the prior accepted manual run. The final Gold query
+also confirms the operational findings and the measured tip-outlier threshold.
 
 | Runtime observation | Verified result |
 |---|---|
@@ -19,11 +20,15 @@ The second complete job run is awaiting evidence.
 | Ticket / item discount events | 240,699 / 275,991 |
 | Payment events | 2,232,092 |
 | Empty payment lists retained | 3,856 |
-| First complete job duration | 19 min 34 s, observed from the Runs screenshot |
+| Complete job runs | `469997930036472` and `904398544867578` |
+| Observed job durations | 19 min 34 s and 21 min 23 s |
+| Gold tip outliers | 77,856 checks above magnitude 17.5, using the available-tip population |
 
 Evidence: [runtime_evidence.json](src/transformations/gold/runtime_evidence.json),
-[job audit](src/transformations/gold/runtime_job_1_validation.csv) and
-[manual audit](src/transformations/gold/runtime_manual_validation.csv).
+[first job audit](src/transformations/gold/runtime_job_1_validation.csv),
+[second job audit](src/transformations/gold/runtime_job_2_validation.csv),
+[manual audit](src/transformations/gold/runtime_manual_validation.csv) and
+[Gold evidence](src/transformations/gold/runtime_gold_evidence.csv).
 These aggregate audit exports contain no individual check or employee records.
 
 ## Exact repository hierarchy
@@ -191,10 +196,13 @@ The current aggregate audit is [source_audit.json](src/transformations/gold/sour
 | Three checks have positive aggregate tip values | Sign convention exceptions deserve targeted review | Use date + location + check ID + payment actor and source file in private evidence |
 | Ticket/item discount events: 240,699 / 275,991 | Event counts are different from unique discounted checks | Keep levels separate and validate monetary overlap before summing |
 
-The runtime validator now reproduces the coverage, discounted-check and event
-counts from accepted Gold/Silver. Specific location concentrations and tip-sign
-breakdowns retain their historical EDA/source origin until the corresponding Gold
-query exports are captured.
+The accepted runtime now reproduces coverage, discounted-check and event counts.
+The [Gold query export](src/transformations/gold/runtime_gold_evidence.csv) confirms
+the top-three location concentration, tip magnitude statistics and measured IQR
+threshold. See [verified business findings](src/transformations/gold/BUSINESS_FINDINGS.md)
+for denominators, limitations and operational recommendations. The three positive
+tip cases also appear in the pipeline output screenshot. Their detailed actor/check
+records remain private in Databricks.
 No model accuracy, reduction in losses or detected-fraud count is claimed.
 
 ## Submission
@@ -220,9 +228,12 @@ population gap, and a full refresh restored all 2,142,846 records. The cause of
 that intermediate empty state is not established. The complete job and its
 unchanged-source comparison subsequently passed.
 
-Remaining evidence includes the second complete job run, individual task timings,
-the pipeline update ID and observed clustering properties. No performance uplift,
-cost saving, accounting accuracy or fraud-detection accuracy is claimed.
+Core technical acceptance is complete: two successful whole-job runs, reconciled
+populations, unchanged-input fingerprints and an exported Gold analysis. Additional
+observability, such as per-task timings, pipeline update IDs and clustering query
+profiles, was not captured. No performance uplift, cost saving, accounting accuracy
+or fraud-detection accuracy is claimed. Confirm evaluator access before submitting
+the link because the repository remains private. Raw POS files remain outside GitHub.
 
 ## Databricks Git folder compatibility
 

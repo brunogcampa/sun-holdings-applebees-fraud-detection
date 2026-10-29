@@ -6,11 +6,11 @@
   "result": "PASSED",
   "markdown_links": "PASSED",
   "full_source_audit": "PASSED",
-  "databricks_runtime": "PASSED_27_DATASETS_AND_COMPLETE_JOB_1",
+  "databricks_runtime": "PASSED_27_DATASETS_AND_TWO_COMPLETE_JOBS",
   "databricks_dry_run": "PASSED_USER_SCREENSHOT",
   "bundle_cli_validation": "NOT_RUN",
   "sql_spark_execution": "PASSED_WITH_USER_EXPORTED_RUNTIME_EVIDENCE",
-  "same_source_runtime_rerun": "PASSED_JOB_1_AGAINST_MANUAL_RUN",
+  "same_source_runtime_rerun": "PASSED_BOTH_COMPLETE_JOBS_AND_PRIOR_MANUAL_RUN",
   "presentation": {
     "main_slides": 8,
     "appendix_slides": 2,
@@ -22,5 +22,6 @@
   "source_notebook_name": "validate_pipeline_source.py",
   "git_text_policy": "LF in all actual text blobs, verified by repository test; .gitattributes alone does not rewrite old blobs",
   "remaining_CRLF_text_files": 0,
-  "second_complete_job_run": "PENDING_USER_EVIDENCE"
+  "second_complete_job_run": "PASSED_28_OF_28",
+  "gold_operational_query_export": "PASSED_15_ROWS"
 }

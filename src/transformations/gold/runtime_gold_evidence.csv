@@ -1,0 +1,16 @@
+section,concept,value,detail
+01_coverage,discounted_tickets,268590,Accepted Gold population
+01_coverage,empty_payment_lists,3856,Accepted Gold population
+01_coverage,global_discounted_ticket_pct,12.53426517817893,Accepted Gold population
+01_coverage,locations,127,Accepted Gold population
+01_coverage,observed_days,115,Accepted Gold population
+01_coverage,tickets,2142846,Accepted Gold population
+02_missing_payments_top3,location_1,928,Topeka; share_of_missing_cases_pct=24.0664; within_location_missing_pct=3.4199
+02_missing_payments_top3,location_141,478,Prescott; share_of_missing_cases_pct=12.3963; within_location_missing_pct=3.6092
+02_missing_payments_top3,location_87,1335,Warsaw; share_of_missing_cases_pct=34.6214; within_location_missing_pct=4.5649
+03_top3_combined_share,share_of_missing_cases_pct,71.08402489626557,Top 3 locations combined / all checks with empty payment lists
+04_tips,mean_tip_magnitude,4.122923420535123,Legacy tip magnitude over all accepted checks
+04_tips,median_tip_magnitude,0.0,Legacy tip magnitude over all accepted checks
+04_tips,pct_above_mean_magnitude,38.73960144592752,Legacy tip magnitude over all accepted checks
+04_tips,pct_above_median_magnitude,48.03261643627214,Legacy tip magnitude over all accepted checks
+05_tip_outliers,high_outlier_checks,77856,Among checks with available tip data; Q1=0.0; Q3=7.0; IQR=7.0; threshold=17.5; rule=ABS(sum of payment Gratuity) > Q3 + 1.5 * IQR

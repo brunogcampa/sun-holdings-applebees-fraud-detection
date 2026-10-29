@@ -2,10 +2,12 @@
 
 ## Estado verificado
 
-El job `applebees-phase2-daily-dev` (ID `54448068766203`) completó la corrida
-`469997930036472` en **19 min 34 s**. Las 28 filas de auditoría pasaron, incluida
-la comparación de huellas con una corrida manual previa. Las tres tareas usan la
-copia `applebees-phase2-code-v2`. El segundo job completo sigue pendiente de evidencia.
+El job `applebees-phase2-daily-dev` (ID `54448068766203`) completó dos corridas:
+`469997930036472` en **19 min 34 s** y `904398544867578` en **21 min 23 s**.
+Las 28 filas de auditoría pasaron en cada una. Las huellas de entrada y de tickets
+publicados coinciden. Las tres tareas usan la copia `applebees-phase2-code-v2`.
+La consulta final Gold también quedó ejecutada y exportada. Consulta
+`runtime_evidence.json`, las dos auditorías CSV y `BUSINESS_FINDINGS.md`.
 
 ## 1. Conectar o actualizar el repositorio en Databricks
 
@@ -158,10 +160,10 @@ capturas deben ocultar datos personales y conservar contexto técnico suficiente
 ## 9. Ensayar cinco minutos en inglés
 
 Usa las ocho diapositivas principales y el guion. El apéndice sirve para preguntas.
-La presentación ya refleja el job completo aprobado y la comparación con la
-corrida manual. Mantén pendiente la segunda corrida completa hasta recibir su
-evidencia. Las concentraciones específicas por location conservan su origen
-EDA/histórico hasta exportar la consulta Gold correspondiente.
+Las evidencias técnicas actualizadas están en `runtime_evidence.json` y los CSV
+de ambos jobs y de Gold. Los archivos de presentación se conservan como estaban.
+Para describir el estado actual, utiliza los IDs, las duraciones y los resultados
+de esta documentación y de `BUSINESS_FINDINGS.md`.
 
 ## Cómo resolver fallos
 

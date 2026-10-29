@@ -9,7 +9,8 @@
   "resolution_implemented": "Separate bounded-memory, hash-verified JSONL preparation task; pipeline reads the explicit prepared inventory",
   "databricks_execution_after_fix": "PASSED_PREPARATION_FULL_REFRESH_AND_COMPLETE_JOB",
   "successful_pipeline_update": true,
-  "same_source_runtime_rerun": "PASSED_JOB_1_AGAINST_MANUAL_RUN",
+  "same_source_runtime_rerun": "PASSED_TWO_COMPLETE_JOBS",
   "intermediate_empty_assessed_output": "Detected by SQL diagnostic; full refresh restored the population. Cause unconfirmed.",
-  "second_complete_job_run": "PENDING_USER_EVIDENCE"
+  "second_complete_job_run": "PASSED_28_OF_28",
+  "gold_business_query": "PASSED"
 }

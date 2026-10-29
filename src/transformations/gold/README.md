@@ -36,3 +36,11 @@
 Historical Week 4 documents, notebooks and aggregate reports have `historical_`
 prefixes. `migration_map.json` maps their original paths. They are not pipeline
 libraries. Private individual transaction/employee evidence is not in this folder.
+
+## Final technical acceptance
+
+Both complete jobs passed all 28 audit results, and the exported Gold analysis
+confirms the business findings. See [BUSINESS_FINDINGS.md](BUSINESS_FINDINGS.md),
+[runtime_job_2_validation.csv](runtime_job_2_validation.csv),
+[runtime_gold_evidence.csv](runtime_gold_evidence.csv) and
+[final_gold_evidence.sql](final_gold_evidence.sql).

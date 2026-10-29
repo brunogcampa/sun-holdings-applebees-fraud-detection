@@ -1,55 +1,68 @@
 # Phase 2 rubric and verified evidence
 
-Verification date: October 29, 2026. Runtime evidence comes from the user-operated
-Databricks workspace, exported CSVs and screenshots. Local tests remain separate.
+Verification date: October 29, 2026. Runtime evidence comes from user-operated
+Databricks executions, exported CSVs and screenshots. Local tests remain separate.
 
-| Criterion | Implemented evidence | Verified runtime result | Remaining evidence |
+| Criterion | Implementation | Verified evidence | Limitations or follow-up |
 |---|---|---|---|
-| GitHub and documentation | Four requested leaf directories, three pipeline libraries, runbook, contract and history | Code cloned and executed in Databricks | Evaluator access to the private repository |
-| Job and pipeline design | Preparation, pipeline refresh and validator with success dependencies and bounded retries | Job 54448068766203, run 469997930036472 succeeded in 19m 34s | Second complete job, per-task durations and exported final configuration |
-| Transformations and table value | Explicit types, composite keys, reference enrichment, separate payment/discount arrays and Gold reporting grains | All 2,142,846 checks preserved and parent-child counts reconciled | Gold operational-query export for displayed location concentration |
-| Engineering practices | Batch justified by static source, bounded JSONL preparation, materialized views, clustering keys and expectations | 27 datasets refreshed, original file lineage preserved, unchanged-source fingerprints match | Observe clustering properties and query profiles before claiming acceleration |
-| Data quality | Missing/type/key/reference rules, quarantine, timestamp and payment-list monitoring, audit gate | No duplicate keys, corrupt records, quarantine or missing dates. 3,856 empty payment lists retained | Internal POS/ledger reconciliation and source-system explanations |
-| Analysis and business value | Explicit discount denominators, operational exceptions, location and actor concentration | Gold coverage confirms 268,590 discounted checks. Payment and discount events reconcile | Confirm discount permissions and exposure-adjusted investigation priorities |
-| Communication | English five-minute script, eight main slides, two appendices and source notes | Presentation reflects first complete job and repeat comparison | Add second complete job evidence when available |
+| Repository and documentation | Four required leaf directories, source logic, YAML, runbook, contracts and SQL | Code cloned and executed in Databricks. Local structure and LF checks pass | Repository is private. Evaluator access must be confirmed |
+| Job and pipeline design | Success dependencies between preparation, refresh and validation. Bounded retries | Job 54448068766203 succeeded twice, with all three tasks green and 28 audit results passing per run | Runs were manually triggered. YAML daily schedule remains a paused proposal |
+| Transformations and table value | Explicit types, composite keys, reference enrichment and independent child arrays | All 2,142,846 rows preserved. Payment and discount child counts reconcile | Business definitions of source amount signs, currency and actor roles require confirmation |
+| Engineering practices | Bounded JSONL preparation, batch materialized views, date/location clustering and expectations | 27 datasets refreshed, original file lineage retained and unchanged-source fingerprints preserved | Clustering is configured in code. Query profiles and measured speed/cost gains are not claimed |
+| Data quality | Missing/type/key/reference rules, quarantine, timestamp/payment monitoring and audit gate | Zero duplicate keys, corrupt records, quarantine and missing dates. 3,856 empty payment lists retained | POS/ledger reconciliation is a business follow-up |
+| Analysis and business value | Gold coverage, location comparisons, tip magnitudes and IQR outliers | 268,590 discounted checks. Top 3 locations hold 71.0840% of empty-payment cases. 77,856 high-tip outliers above 17.5 | Concentration and statistical outliers are review signals, with explicit denominators |
+| Communication | README, business findings, source notes, runbook and evidence links | Latest results and both runs are documented | Existing presentation assets remain an earlier snapshot. Runtime evidence is authoritative |
 
 ## Runtime evidence register
 
 | Evidence ID | Status | Evidence |
 |---|---|---|
-| P1 | PASSED for data execution | 27 dataset screenshots and exact population SQL export. Pipeline update ID still to capture |
-| J1 | PASSED | Screenshot of `prepare_sources`, `refresh_pipeline`, `validate_outputs` with success dependencies |
-| J2 | PARTIAL | First complete job succeeded. It matches the prior accepted manual run. Second complete job awaits evidence |
-| Q1 | PASSED | Ten assessed rules met. One monitored exception corresponds to empty payment lists. Published rows retained |
-| Q2 | PASSED | Manual gate and all 28 first-job audit results passed, including 24 blocking results |
-| A1 | PARTIAL | Coverage/event counts verified in Gold/Silver. Specific location-concentration export still to capture |
-| E1 | IMPLEMENTED | Date/location clustering configured in code. No measured speed or cost improvement claimed |
+| P1 | PASSED | Screenshots of all 27 datasets and exact population SQL export |
+| J1 | PASSED | Three-task job graph, ordered by success dependencies |
+| J2 | PASSED | Runs 469997930036472 and 904398544867578 succeeded in 19m 34s and 21m 23s |
+| Q1 | PASSED | Ten assessed rules met. The payment-record monitor flags 3,856 retained checks |
+| Q2 | PASSED | Both full-job audit exports contain 28 passed results, including 24 blocking results each |
+| A1 | PASSED | Final Gold query and its 15-row aggregate export reproduce coverage, location and tip findings |
+| E1 | IMPLEMENTED AND EXPLAINED | Code and design rationale cover batch, materialized views, clustering and expectations. No unmeasured speed claim |
 
-## Exact evidence and interpretation
+## Exact run evidence
+
+| Run | Identifier | Observed duration | Audit |
+|---|---|---|---|
+| Prior manual gate | `manual_5ac8591deaee4c87ad21ca2d16dc38f1` | Not captured | [Manual validation](runtime_manual_validation.csv) |
+| Complete job 1 | `469997930036472` | 19m 34s | [28 passed results](runtime_job_1_validation.csv) |
+| Complete job 2 | `904398544867578` | 21m 23s | [28 passed results](runtime_job_2_validation.csv) |
+
+- Job ID: `54448068766203`.
+- Source fingerprint in all accepted runs: `2142846:3507863786310667794794`.
+- Published-check fingerprint: `2142846:-2753200972392633748389`.
+- Both complete jobs record `same_source_rerun_consistency=true` and `run_complete=true`.
+- `severity=ERROR` labels a blocking rule. `passed=true` establishes its success.
+- Payment events: 2,232,092. Discount events: 240,699 ticket and 275,991 item.
+- Signed payment/tip sums reconcile within the declared 0.01 aggregation tolerance.
+- Empty-payment monitor: 3,856. Timestamp issues: 0.
+- Twenty-four local tests cover fixtures, bounded preparation and repository contracts.
+
+## Supporting files and interpretation
 
 - [Runtime summary](runtime_evidence.json)
-- [Manual gate CSV](runtime_manual_validation.csv)
-- [Complete-job gate CSV](runtime_job_1_validation.csv)
-- Manual accepted run: `manual_5ac8591deaee4c87ad21ca2d16dc38f1`.
-- Complete job run: `469997930036472`. Observed total duration: 19m 34s.
-- Source fingerprint: `2142846:3507863786310667794794` in both runs.
-- Published-check fingerprint: `2142846:-2753200972392633748389` in both runs.
-- The manual run recorded `FIRST_RUN`. The complete job records `same_source_rerun_consistency=true`.
-- `severity=ERROR` labels a blocking rule. Its `passed=true` value establishes success.
-- All 2,142,846 source rows are assessed and published. Quarantine and valid out-of-scope outputs contain zero rows.
-- Discount events: 240,699 ticket and 275,991 item. Payment events: 2,232,092.
-- Signed payment/tip sums reconcile within the declared 0.01 aggregation tolerance.
-- `empty_payment_lists_monitor=3856` and `timestamp_issues_monitor=0` are intentional monitoring results.
-- Twenty-four local tests cover fixtures, preparation and repository contracts. They do not substitute for the runtime exports.
+- [Final Gold query](final_gold_evidence.sql)
+- [Gold export](runtime_gold_evidence.csv)
+- [Business findings and recommendations](BUSINESS_FINDINGS.md)
+- [Data contract](DATA_CONTRACT.md)
 
-The fingerprint covers selected raw fields and published checks, while Gold
-totals reconcile separately. It does not establish bitwise equality of every Gold
-dataset or accounting accuracy against the POS/ledger. Original and prepared
-transactional files stay private in the volume.
+The fingerprint covers selected raw fields and published checks. Gold totals
+reconcile separately. These checks do not establish accounting accuracy against
+the POS/ledger or bitwise identity of every Gold table. Detailed transactional
+and actor records stay private in the volume and Databricks tables.
 
-## Remaining submission checks
+## Delivery and optional observability
 
-Capture the second full job run and its audit, the pipeline update ID, per-task
-durations and Gold operational-query results. Confirm evaluator access. Keep
-manual triggering during verification. The paused 07:00 schedule in the bundle
-is a deployment proposal, not an observed active workspace schedule.
+Core technical acceptance and runtime evidence are complete. Confirm that the
+evaluators can access the private repository before submitting its URL. Keep the
+current manual-trigger setting unless a real new-data cadence is agreed. The
+paused daily schedule in YAML is a deployment proposal.
+
+Individual task timings, pipeline update IDs, exported workspace configuration
+and clustering query profiles were not captured. They are useful observability
+extensions, and no corresponding performance improvement is claimed.
