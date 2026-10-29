@@ -1,6 +1,6 @@
 {
   "date": "2026-10-29",
-  "local_fixture_and_repository_tests": 23,
+  "local_fixture_and_repository_tests": 24,
   "jsonl_preparation_tests": 8,
   "representative_conversion": "PASSED: 27,882 complete records in the largest 167,836,619-byte source file compared with prepared output",
   "result": "PASSED",
@@ -20,5 +20,6 @@
   },
   "databricks_asset_name_collisions": 0,
   "source_notebook_name": "validate_pipeline_source.py",
-  "git_text_policy": "LF via .gitattributes; text sources already LF"
+  "git_text_policy": "LF in all actual text blobs, verified by repository test; .gitattributes alone does not rewrite old blobs",
+  "remaining_CRLF_text_files": 0
 }

@@ -32,7 +32,7 @@ Eight main slides, followed by two appendix slides for questions. Rehearse at ro
 
 ## Slide 8
 
-04:20–05:00. Our value is a repeatable foundation for investigation: each metric has a defined population, and each exception has a source and handling policy. The dry run passed, but the first processing update hit a JSON-reader memory limit. We implemented bounded file preparation, passed 23 local tests and compared every record in the largest source file. We still need a successful Databricks run and an unchanged-source rerun. That evidence is the acceptance gate before operational use and future anomaly models.
+04:20–05:00. Our value is a repeatable foundation for investigation: each metric has a defined population, and each exception has a source and handling policy. The dry run passed, but the first processing update hit a JSON-reader memory limit. We implemented bounded file preparation, passed 24 local tests and compared every record in the largest source file. We still need a successful Databricks run and an unchanged-source rerun. That evidence is the acceptance gate before operational use and future anomaly models.
 
 ## Before the final presentation
 

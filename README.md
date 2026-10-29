@@ -201,9 +201,17 @@ performance and same-source rerun evidence remain pending in Databricks.
 The importable notebook is `validate_pipeline.ipynb`; its source counterpart has
 the distinct name `validate_pipeline_source.py`. Databricks cannot store a source
 notebook and an IPYNB with the same base name in one folder. Text uses LF line
-endings, enforced by `.gitattributes`.
+endings in the actual blob contents, checked by a repository test and enforced by
+`.gitattributes`. Historical blobs were explicitly renormalized; attributes alone
+do not rewrite files already stored with CRLF.
 
 If an earlier clone shows missing folders or unexpected local changes, preserve
 that clone and create a fresh Git folder from `main` under a new workspace name,
 such as `applebees-phase2-code`. Keep sparse checkout off. Then select the pipeline
 libraries from the new Git folder. This changes workspace paths, not GitHub structure.
+
+If a pull reports success but the Git dialog still shows an old commit, inspect
+the actual Git status in the web terminal. Preserve uncommitted work with
+`git stash push --include-untracked -m backup-before-jsonl-update` before a normal
+`git pull --ff-only origin main`. Keep that stash until changes have been reviewed;
+do not automatically reapply older code over the updated pipeline libraries.
