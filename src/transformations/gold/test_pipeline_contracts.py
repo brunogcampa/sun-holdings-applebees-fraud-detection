@@ -61,6 +61,8 @@ class RepositoryContracts(unittest.TestCase):
     def test_job_dependency_and_paused_schedule(self):
         cfg=(ROOT/'resources/jobs/daily_orchestration_job.yml').read_text()
         self.assertIn('pause_status: PAUSED',cfg)
+        self.assertIn('depends_on:\n            - task_key: prepare_sources',cfg)
+        self.assertIn('notebook_path: ../../src/transformations/silver/prepare_checks_jsonl.ipynb',cfg)
         self.assertIn('depends_on:\n            - task_key: refresh_pipeline',cfg)
         self.assertIn('max_concurrent_runs: 1',cfg)
         self.assertIn('max_retries: 0',cfg)
@@ -71,11 +73,12 @@ class RepositoryContracts(unittest.TestCase):
             for dep in re.findall(r'\b(silver_\w+)\b',p.read_text()):
                 self.assertIn(dep,names,(p,dep))
     def test_validation_notebook_has_no_outputs(self):
-        nb=json.loads((HERE/'validate_pipeline.ipynb').read_text())
-        for c in nb['cells']:
-            if c['cell_type']=='code':
-                ast.parse(''.join(c['source']));self.assertEqual(c['outputs'],[])
-                self.assertIsNone(c['execution_count'])
+        for path in [HERE/'validate_pipeline.ipynb', ROOT/'src/transformations/silver/prepare_checks_jsonl.ipynb']:
+            nb=json.loads(path.read_text(encoding='utf-8'))
+            for c in nb['cells']:
+                if c['cell_type']=='code':
+                    ast.parse(''.join(c['source']));self.assertEqual(c['outputs'],[])
+                    self.assertIsNone(c['execution_count'])
 
 if __name__=='__main__':
     unittest.main(verbosity=2)

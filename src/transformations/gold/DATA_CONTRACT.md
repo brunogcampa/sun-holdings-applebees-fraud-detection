@@ -7,6 +7,18 @@ are complete multiline JSON arrays, not JSON Lines or a change-data feed. Raw
 files are immutable inputs for this snapshot; their hashes are recorded by the
 independent source audit. Expected inventory: 115 files and 115 observed dates.
 
+A separate preparation task reads each source array with bounded reads and writes
+JSON Lines shards targeting 16 MiB; a single large record stays intact up to the
+32 MiB text limit. It removes only insignificant whitespace, preserves original
+numeric/string tokens and array order, and adds `_source_file`. Silver restores
+`source_file` from that value, so coverage still counts original files, not shards.
+Source/output SHA256 values, row counts and the explicit active inventory remain
+private in the volume. Malformed framing or oversized records fail preparation.
+The job blocks refresh on that failure; it never skips a bad source silently.
+Verified content is reused on reruns. Older cache versions are retained but not
+read by the active inventory. Manifest publication is not a multi-file atomic
+transaction; one concurrent job and no overlapping manual updates are required.
+
 Check key: `business_date + LocationId + check_id`. Check ID alone is not unique.
 Negative IDs are preserved. Null keys are rejected from the analytical population.
 All rows sharing a duplicate key are quarantined because no trustworthy update

@@ -5,8 +5,8 @@ This register distinguishes verified evidence from pending Databricks actions.
 
 | Criterion | Implementation and explanation | Evidence available now | Runtime evidence still required |
 |---|---|---|---|
-| GitHub repository and documentation | Exact four leaf directories; bundle entry point; root navigation; runbook; contracts; historical migration map | Source files, 15 passing local tests, Git history | Confirm a reviewer can access the private repository |
-| Job and pipeline design | Triggered Lakeflow graph followed by validator task; one concurrent run; paused schedule; bounded retry | Two YAML files, dependency and recovery documentation | Job graph, successful pipeline update, run IDs, observed durations |
+| GitHub repository and documentation | Exact four leaf directories; bundle entry point; root navigation; runbook; contracts; historical migration map | Source files, Passing local fixture, preparation and repository tests, Git history | Confirm a reviewer can access the private repository |
+| Job and pipeline design | Source preparation followed by triggered Lakeflow graph and validator task; one concurrent run; paused schedule; bounded retry | Two YAML files, dependency and recovery documentation | Job graph, successful pipeline update, run IDs, observed durations |
 | Transformations and table value | Explicit schemas, date parsing, reference enrichment, composite keys, quarantine, separate child events, Gold reporting grains | Three pipeline libraries, table catalog and analytical definitions | Graph/table previews and parent-child reconciliation results |
 | Streaming, materialized views, liquid clustering and expectations | Batch justified by static multiline export; materialized views; date/location clustering; warn/fail rules | Configuration and documented tradeoffs | Actual expectations results and clustering settings; query profiles before performance claims |
 | Data quality checks | Missing keys, types, dates, duplicates, references, list/numeric availability, scope, timestamps, reconciliation | Full-source Python audit and synthetic failure fixtures | Quarantine/expectations views and validator audit from Databricks |
@@ -21,8 +21,10 @@ This register distinguishes verified evidence from pending Databricks actions.
 - Empty Payments: 3,856. Null Payments: zero. These are distinct observations.
 - Discount events: 240,699 ticket / 275,991 item. Payment events: 2,232,092.
 - Tip signs: 1,029,262 negative / 1,113,581 zero / 3 positive aggregate checks.
-- Local tests: 15 passed. They test fixtures and repository contracts, not Spark execution.
-- New Databricks pipeline execution: **PENDING**.
+- Local tests cover fixtures, lossless bounded preparation, failure recovery and repository contracts; see `local_validation.json`. They do not execute Spark.
+- Databricks dry run: **PASSED**, based on the user-provided screenshot.
+- First processing update: **FAILED** with Photon JSON-scan out-of-memory; downstream flows skipped.
+- Bounded JSONL fix: **IMPLEMENTED AND LOCALLY TESTED**; successful Databricks update remains **PENDING**.
 - Bundle CLI validation and actual SQL/Spark execution: **PENDING**.
 - Job run and same-source rerun: **PENDING**.
 - Measured latency/cost improvement and fraud detection accuracy: **NOT CLAIMED**.

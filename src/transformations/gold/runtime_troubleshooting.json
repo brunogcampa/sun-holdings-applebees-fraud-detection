@@ -1,0 +1,13 @@
+{
+  "date": "2026-10-29",
+  "evidence": "user-provided dry-run screenshot and pasted runtime errors",
+  "pipeline_name": "applebees-phase2-dev",
+  "dry_run": "PASSED",
+  "first_processing_update": "FAILED",
+  "root_cause": "Photon SimdJsonReader out of memory while scanning large source JSON arrays",
+  "dependent_flows": "SKIPPED due to upstream failure",
+  "resolution_implemented": "Separate bounded-memory, hash-verified JSONL preparation task; pipeline reads the explicit prepared inventory",
+  "databricks_execution_after_fix": "PENDING",
+  "successful_pipeline_update": false,
+  "same_source_runtime_rerun": "PENDING"
+}

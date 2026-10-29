@@ -8,7 +8,7 @@ Eight main slides, followed by two appendix slides for questions. Rehearse at ro
 
 ## Slide 2
 
-00:25–01:00. The source is a fixed export of complete JSON arrays. Silver standardizes types and checks dates, references and identifiers. It keeps unusable records in quarantine, with reasons, rather than silently deleting them. Gold prepares the business metrics. A separate validation task reconciles those outputs before a run is accepted. We preserve source-file lineage throughout, and keep the historical EDA in a separate schema for comparison.
+00:25–01:00. The source is a fixed export of complete JSON arrays. A preparation task converts them into smaller JSON Lines files while preserving values and source paths. Silver standardizes types and checks dates, references and identifiers. Unusable records remain in quarantine with reasons. Gold prepares the business metrics, and a separate validation task reconciles the outputs before acceptance. The historical EDA stays in a separate schema for comparison.
 
 ## Slide 3
 
@@ -20,7 +20,7 @@ Eight main slides, followed by two appendix slides for questions. Rehearse at ro
 
 ## Slide 5
 
-02:20–02:55. The job refreshes the pipeline and runs the validator only after a successful update. We allow one concurrent run and one retry for a transient pipeline failure. A failed data check requires investigation. Audit records use run ID plus metric, so retrying the validator does not duplicate audit rows. A second unchanged-source run tests consistency against the prior accepted run. The daily schedule remains paused. Actual run IDs and durations must come from Databricks.
+02:20–02:55. The job prepares the source files, refreshes the pipeline, then validates its outputs. Each task requires the previous task to succeed. We allow one concurrent run and bounded retries for processing failures. Failed data checks require investigation. Audit records use run ID plus metric, preventing duplicate audit rows on retry. A second unchanged-source run tests consistency against the prior accepted run. The schedule stays paused; actual run IDs and durations must come from Databricks.
 
 ## Slide 6
 
@@ -32,8 +32,8 @@ Eight main slides, followed by two appendix slides for questions. Rehearse at ro
 
 ## Slide 8
 
-04:20–05:00. Our value is a repeatable foundation for investigation: each metric has a defined population, and each exception has a source and handling policy. The repository, transformations, quality rules and job definition are prepared. Fifteen local checks pass, and the full-source audit reproduces the baseline. The remaining acceptance step is to execute the pipeline and job in Databricks, repeat the run unchanged, and capture the results. Then we can prioritize operational review and develop anomaly models with a clearer understanding of data quality.
+04:20–05:00. Our value is a repeatable foundation for investigation: each metric has a defined population, and each exception has a source and handling policy. The dry run passed, but the first processing update hit a JSON-reader memory limit. We implemented bounded file preparation, passed 23 local tests and compared every record in the largest source file. We still need a successful Databricks run and an unchanged-source rerun. That evidence is the acceptance gate before operational use and future anomaly models.
 
 ## Before the final presentation
 
-The present script accurately states that Databricks deployment and execution are pending. Update those statements only after capturing real successful update/run IDs, validation results and a same-source rerun. Keep the schedule paused until accepted.
+The present script records the observed dry-run success, failed processing update and locally tested fix. Successful processing remains pending. Update statements and refresh the slide deck only after capturing real update/run IDs, validation results and a same-source rerun. Keep the schedule paused until accepted.

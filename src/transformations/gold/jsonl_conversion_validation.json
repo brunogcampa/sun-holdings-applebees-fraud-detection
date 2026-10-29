@@ -1,0 +1,17 @@
+{
+  "date": "2026-10-29",
+  "evidence_type": "local_representative_source_conversion",
+  "selection": "largest of 115 original JSON files by byte size",
+  "source_bytes": 167836619,
+  "records_compared": 27882,
+  "jsonl_shards": 11,
+  "largest_shard_bytes": 16777192,
+  "all_record_values_equal": true,
+  "original_file_lineage_preserved": true,
+  "source_matches_independent_baseline_sha256": true,
+  "python_peak_traced_bytes_during_conversion": 5333007,
+  "peak_measurement_limit": "Python allocations tracked by tracemalloc; not total process RSS or Spark memory",
+  "elapsed_seconds": 29.44,
+  "spark_pipeline_executed": false,
+  "databricks_execution_after_fix": "PENDING"
+}

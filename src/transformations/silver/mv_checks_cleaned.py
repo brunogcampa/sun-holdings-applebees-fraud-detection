@@ -1,8 +1,10 @@
 """Lakeflow source definitions. Execute as a pipeline library, not as a notebook.
 
-Batch input is intentional: the supplied files contain complete multiline JSON arrays.
+Batch input is intentional: source arrays are prepared as bounded JSONL shards.
 Data quality warnings preserve evidence. Hard key/reference failures route to quarantine.
 """
+import json
+from pathlib import Path
 from pyspark import pipelines as dp
 from pyspark.sql import functions as F, Window
 
@@ -30,7 +32,21 @@ def json_source(path, schema):
 @dp.materialized_view(name="silver_checks_raw", comment="Selected source fields with explicit types and file lineage")
 @dp.expect("parseable_source", "_corrupt_record IS NULL")
 def silver_checks_raw():
-    return json_source("/facts/checks", SCHEMA)
+    # Preparation is a separate job task: never load a whole daily array in Photon.
+    ready_path = root() + "_jsonl/_READY.json"
+    with open(ready_path, encoding="utf-8") as handle:
+        ready = json.load(handle)
+    if ready.get("format_version") != 1 or ready.get("source_root") != root():
+        raise ValueError("Run prepare_checks_jsonl.ipynb for this source_root first")
+    files = ready.get("output_files", [])
+    expected_parent = Path(root() + "_jsonl/files").resolve()
+    if not files or any(not Path(path).resolve().is_relative_to(expected_parent)
+                        or not path.endswith(".jsonl") for path in files):
+        raise ValueError("Prepared manifest has no valid JSONL input files")
+    return (spark.read.schema(SCHEMA + ", _source_file STRING")
+            .option("multiLine", "false").option("mode", "PERMISSIVE")
+            .json(files).withColumn("source_file", F.col("_source_file"))
+            .drop("_source_file"))
 
 
 @dp.materialized_view(name="silver_locations", comment="Location names and IDs; duplicate IDs block publication")

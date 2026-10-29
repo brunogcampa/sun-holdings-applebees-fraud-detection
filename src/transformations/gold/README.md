@@ -25,6 +25,9 @@
 - `test_pipeline_contracts.py`: local fixture and structure checks.
 - `verify_sources.py`: independent source audit implementation; pass the dataset directory.
 - `local_validation.json`: local check results and explicit runtime limitations.
+- `test_jsonl_preparation.py`: bounded/lossless conversion, cache validation and failure-recovery tests.
+- `jsonl_conversion_validation.json`: every record of the largest source file compared locally with JSONL output; not a Spark run.
+- `runtime_troubleshooting.json`: observed dry-run success, first-update memory failure and pending runtime verification of the fix.
 
 Historical Week 4 documents, notebooks and aggregate reports have `historical_`
 prefixes. `migration_map.json` maps their original paths. They are not pipeline

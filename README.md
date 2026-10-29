@@ -6,8 +6,10 @@ operations can prioritize unusual activity for review. An anomaly is not proof o
 **Current evidence:** an independent audit reread all **115 JSON files**, totaling
 **2,142,846 checks, 127 locations and 115 days**, April 28 through August 20, 2026.
 It reproduced **268,590 discounted checks**, **3,856 empty payment lists** and the
-original tip-sign counts. The new Lakeflow pipeline has **not yet been executed**
-in Databricks. Local source evidence is not represented as a successful Spark run.
+original tip-sign counts. A user-supplied screenshot confirms a successful dry run.
+The first data-processing update **failed in Photon JSON scanning with an out-of-memory error**.
+A bounded JSONL preparation task is now implemented and locally tested; its Databricks
+run and a successful pipeline update remain pending. Local tests are not a successful Spark run.
 
 ## Exact repository hierarchy
 
@@ -25,7 +27,9 @@ sun-holdings-applebees-fraud-detection/
 └── src/
     └── transformations/
         ├── silver/
-        │   └── mv_checks_cleaned.py
+        │   ├── mv_checks_cleaned.py
+        │   ├── prepare_checks_jsonl.ipynb
+        │   └── prepare_checks_jsonl_source.py
         └── gold/
             ├── mv_executive_kpis.sql
             ├── mv_quality_metrics.sql
@@ -53,7 +57,8 @@ The prior repository remains recoverable in Git history.
 
 ```mermaid
 flowchart LR
-    A[Volume: multiline JSON checks] --> B[silver_checks_raw]
+    A[Original JSON arrays in volume] --> N[Bounded preparation: JSON Lines shards]
+    N --> B[silver_checks_raw]
     L[Location and channel references] --> C[silver_checks_assessed]
     B --> C
     C --> D[silver_checks]
@@ -89,11 +94,15 @@ flowchart LR
 
 ## Job and recovery
 
-The job has two tasks: **refresh_pipeline**, followed by **validate_outputs** with
-an `ALL_SUCCESS` dependency. Lakeflow resolves the internal Silver/Gold graph.
+The job has three sequential tasks: **prepare_sources**, **refresh_pipeline**,
+then **validate_outputs**, each dependent on the previous task succeeding. Lakeflow resolves the internal Silver/Gold graph.
 Concurrency is one. The proposed schedule is 07:00 America/Mexico_City, **PAUSED**.
 No email or external notification is sent by this configuration.
 
+- Preparation reads bounded chunks, preserves JSON value tokens and writes shards targeting 16 MiB.
+  It caches verified content by source SHA256 and publishes an explicit active file inventory last.
+  Old cache files are retained and excluded from the active inventory, preventing duplicate reads.
+  A failed preparation blocks the pipeline task. Concurrent manual preparation/updates are unsupported.
 - A source parsing or reference-dimension failure prevents a successful publication.
 - Invalid checks retain their reasons in quarantine. The validator fails when
   quarantine is nonempty, making an operator review necessary before acceptance.
@@ -130,7 +139,7 @@ or arbitrary first-row survivor is used. See [data contract](src/transformations
 
 | Feature | Decision and reason | Evidence needed in Databricks |
 |---|---|---|
-| Batch versus streaming | Batch materialized views read a fixed historical export of complete multiline JSON arrays. Streaming adds little value to this static input. Auto Loader/streaming requires a future append-only landing contract and checkpoint strategy. | First update and same-source refresh |
+| Batch versus streaming | A preparation notebook converts fixed historical JSON arrays into bounded JSONL shards before batch materialized views read them. Streaming adds little value to this static input. Auto Loader/streaming requires a future append-only landing contract and checkpoint strategy. | First update and same-source refresh |
 | Materialized views | Silver and Gold definitions return managed, refreshable datasets. Gold precomputes repeated reporting aggregations. | Graph and update results |
 | Liquid clustering | `silver_checks` configures `business_date` and `LocationId`, matching date/location filters. No manual partitions. | Confirm keys and compare query profiles before claiming speed gains |
 | Expectations | Warn for diagnosis, fail for dimension/publication integrity; quarantine provides inspectable evidence. | Quality tab/event log and quarantine queries |
@@ -148,7 +157,8 @@ CLI alternative, after configuring authentication: `databricks bundle validate -
 then `databricks bundle deploy -t dev`. Execution is a separate deliberate step.
 No CLI installation is required for the runbook's web workflow.
 
-Local checks: `python -B src/transformations/gold/test_pipeline_contracts.py`.
+Local checks: `python -B src/transformations/gold/test_pipeline_contracts.py` and
+`python -B src/transformations/gold/test_jsonl_preparation.py`.
 Independent source audit: `python src/transformations/gold/verify_sources.py PATH_TO_DATASET`.
 The current aggregate audit is [source_audit.json](src/transformations/gold/source_audit.json).
 
@@ -180,9 +190,11 @@ No model accuracy, reduction in losses or detected-fraud count is claimed.
 - [Expectations and actions](https://docs.databricks.com/aws/en/ldp/expectations)
 - [Quarantine patterns](https://docs.databricks.com/aws/en/ldp/expectation-patterns)
 - [Job and serverless bundle examples](https://docs.databricks.com/aws/en/dev-tools/bundles/examples)
+- [JSON Lines and multiline JSON reading](https://docs.databricks.com/aws/en/query/formats/json)
 
-Runtime deployment, successful updates, observed expectations, clustering performance
-and same-source rerun evidence remain pending until performed in Databricks.
+Runtime progress: dry run passed; first data update failed in the JSON scan. The
+JSONL fix is implemented, but successful updates, observed expectations, clustering
+performance and same-source rerun evidence remain pending in Databricks.
 
 ## Databricks Git folder compatibility
 
