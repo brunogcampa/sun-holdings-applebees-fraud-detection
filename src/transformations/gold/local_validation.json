@@ -14,5 +14,8 @@
     "language": "English",
     "target_minutes": 5,
     "all_slides_visually_reviewed": true
-  }
+  },
+  "databricks_asset_name_collisions": 0,
+  "source_notebook_name": "validate_pipeline_source.py",
+  "git_text_policy": "LF via .gitattributes; text sources already LF"
 }

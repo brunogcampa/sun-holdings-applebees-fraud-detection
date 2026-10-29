@@ -15,6 +15,7 @@ in Databricks. Local source evidence is not represented as a successful Spark ru
 sun-holdings-applebees-fraud-detection/
 ├── README.md
 ├── .gitignore
+├── .gitattributes
 ├── databricks.yml
 ├── resources/
 │   ├── jobs/
@@ -29,7 +30,7 @@ sun-holdings-applebees-fraud-detection/
             ├── mv_executive_kpis.sql
             ├── mv_quality_metrics.sql
             ├── validate_pipeline.ipynb
-            ├── validate_pipeline.py
+            ├── validate_pipeline_source.py
             ├── demo_queries.sql
             ├── RUNBOOK_ES.md
             ├── DATA_CONTRACT.md
@@ -182,3 +183,15 @@ No model accuracy, reduction in losses or detected-fraud count is claimed.
 
 Runtime deployment, successful updates, observed expectations, clustering performance
 and same-source rerun evidence remain pending until performed in Databricks.
+
+## Databricks Git folder compatibility
+
+The importable notebook is `validate_pipeline.ipynb`; its source counterpart has
+the distinct name `validate_pipeline_source.py`. Databricks cannot store a source
+notebook and an IPYNB with the same base name in one folder. Text uses LF line
+endings, enforced by `.gitattributes`.
+
+If an earlier clone shows missing folders or unexpected local changes, preserve
+that clone and create a fresh Git folder from `main` under a new workspace name,
+such as `applebees-phase2-code`. Keep sparse checkout off. Then select the pipeline
+libraries from the new Git folder. This changes workspace paths, not GitHub structure.
