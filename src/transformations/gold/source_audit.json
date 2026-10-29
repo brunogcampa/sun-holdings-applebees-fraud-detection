@@ -1,0 +1,27 @@
+{
+  "evidence_type": "independent_python_source_audit",
+  "spark_pipeline_executed": false,
+  "files": 115,
+  "locations": 127,
+  "observed_days": 115,
+  "start_date": "2026-04-28",
+  "end_date": "2026-08-20",
+  "counts": {
+    "raw_checks": 2142846,
+    "discounted_checks": 268590,
+    "ticket_discount_events": 240699,
+    "item_discount_events": 275991,
+    "payment_events": 2232092,
+    "empty_payment_lists": 3856,
+    "null_payment_lists": 0,
+    "tip_zero": 1113581,
+    "tip_negative": 1029262,
+    "tip_positive": 3,
+    "duplicate_keys": 0
+  },
+  "quality_issues": {},
+  "dimension_ids_unique": true,
+  "daily_discounted_pct_mean": 12.616080062888765,
+  "location_discounted_pct_mean": 12.596362712491148,
+  "elapsed_seconds": 380.8
+}

@@ -1,0 +1,18 @@
+{
+  "date": "2026-10-28",
+  "local_fixture_and_repository_tests": 15,
+  "result": "PASSED",
+  "markdown_links": "PASSED",
+  "full_source_audit": "PASSED",
+  "databricks_runtime": "PENDING",
+  "bundle_cli_validation": "NOT_RUN",
+  "sql_spark_execution": "NOT_RUN",
+  "same_source_runtime_rerun": "PENDING",
+  "presentation": {
+    "main_slides": 8,
+    "appendix_slides": 2,
+    "language": "English",
+    "target_minutes": 5,
+    "all_slides_visually_reviewed": true
+  }
+}

@@ -1,45 +1,7 @@
-# Datos de origen y exportaciones
-/data/
-/dimensions/
-/facts/
-/Applebees_Clean_Dataset/
-/Additional_Information/
-*.parquet
-*.csv
-*.tsv
-*.xlsx
-*.db
-*.sqlite
-*.zip
-
-# Secretos y configuración local
+# Never commit source data, secrets or individual transaction exports.
 .env
-.env.*
-!.env.example
-.databrickscfg
-/config/local.*
-/config/secrets.*
 *.pem
 *.key
-
-# Python, entornos y herramientas
+.databricks/
 __pycache__/
-*.py[cod]
-.venv/
-venv/
-.pytest_cache/
-.coverage
-htmlcov/
-.ipynb_checkpoints/
-.DS_Store
-Thumbs.db
-
-# Agregados revisados de Week 4 (sin detalle transaccional)
-!/reports/week4/*.csv
-# Evidencia privada y exportaciones con outputs
-/private/
-/entrega_week4/
-*_propina_positiva.csv
-*employee*.csv
-*empleado*.csv
-*evidence*.json
+*.zip

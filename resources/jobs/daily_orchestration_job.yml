@@ -1,14 +1,31 @@
 resources:
   jobs:
     daily_orchestration_job:
-      name: applebees-daily-orchestration-${bundle.target}
+      name: applebees-phase2-daily-${bundle.target}
+      description: Refresh Silver and Gold, then fail the job if the validation gate fails.
       max_concurrent_runs: 1
       schedule:
         quartz_cron_expression: '0 0 7 * * ?'
         timezone_id: America/Mexico_City
         pause_status: PAUSED
       tasks:
-        - task_key: refresh_silver_and_gold
+        - task_key: refresh_pipeline
           pipeline_task:
-            pipeline_id: ${resources.pipelines.applebees_eda.id}
+            pipeline_id: ${resources.pipelines.applebees_phase2.id}
             full_refresh: false
+          max_retries: 1
+          min_retry_interval_millis: 60000
+          timeout_seconds: 7200
+        - task_key: validate_outputs
+          depends_on:
+            - task_key: refresh_pipeline
+          run_if: ALL_SUCCESS
+          notebook_task:
+            notebook_path: ../../src/transformations/gold/validate_pipeline.ipynb
+            base_parameters:
+              catalog: ${var.catalog}
+              schema: ${var.schema}
+              run_id: '{{job.run_id}}'
+              validate_original_snapshot: 'true'
+          max_retries: 0
+          timeout_seconds: 1800

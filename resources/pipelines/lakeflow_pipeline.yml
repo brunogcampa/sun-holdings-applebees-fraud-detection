@@ -1,26 +1,21 @@
 resources:
   pipelines:
-    applebees_eda:
-      name: applebees-eda-${bundle.target}
+    applebees_phase2:
+      name: applebees-phase2-${bundle.target}
       catalog: ${var.catalog}
       schema: ${var.schema}
       serverless: true
       continuous: false
       development: true
+      edition: ADVANCED
       configuration:
         applebees.source_root: ${var.source_root}
         applebees.start_date: ${var.start_date}
         applebees.end_date: ${var.end_date}
       libraries:
         - file:
-            path: ../../src/transformations/silver/checks_clean.py
+            path: ../../src/transformations/silver/mv_checks_cleaned.py
         - file:
-            path: ../../src/transformations/silver/discount_events.py
+            path: ../../src/transformations/gold/mv_executive_kpis.sql
         - file:
-            path: ../../src/transformations/gold/mv_daily_metrics.sql
-        - file:
-            path: ../../src/transformations/gold/mv_location_metrics.sql
-        - file:
-            path: ../../src/transformations/gold/mv_discount_catalog.sql
-        - file:
-            path: ../../src/transformations/gold/mv_data_quality.sql
+            path: ../../src/transformations/gold/mv_quality_metrics.sql

@@ -1,0 +1,577 @@
+[
+  {
+    "relative_path": "facts/checks/brand=rmh/dt=2026-04-28/checks.json",
+    "sha256": "8f9fc9c69ab4eaf59330f6b7f45c12d487889dcae67d0c5fb98d4aaab5ed16b5",
+    "bytes": 71042139
+  },
+  {
+    "relative_path": "facts/checks/brand=rmh/dt=2026-04-29/checks.json",
+    "sha256": "77558f0868c1f79118d47df88a8bead83c3a78961475ea2508d0ff3b7b1a94fb",
+    "bytes": 77318163
+  },
+  {
+    "relative_path": "facts/checks/brand=rmh/dt=2026-04-30/checks.json",
+    "sha256": "709604c9d756bbc3fe9690837998a809cdd68639e231700b9275c25ae848ff34",
+    "bytes": 87694951
+  },
+  {
+    "relative_path": "facts/checks/brand=rmh/dt=2026-05-01/checks.json",
+    "sha256": "a2d0ea3b7b443ad440e124c206ae157821f4f7a6c631af9e9c59e2402888f7b6",
+    "bytes": 127343374
+  },
+  {
+    "relative_path": "facts/checks/brand=rmh/dt=2026-05-02/checks.json",
+    "sha256": "3ff21868e015bddc7fbfdd865092aa275fe6b70230e0caf685f611674fc73e33",
+    "bytes": 127311534
+  },
+  {
+    "relative_path": "facts/checks/brand=rmh/dt=2026-05-03/checks.json",
+    "sha256": "62beb4a5050ead210b81c19d19d2944c1bcb94a32c7a9c1f4839f0f76749b640",
+    "bytes": 102725222
+  },
+  {
+    "relative_path": "facts/checks/brand=rmh/dt=2026-05-04/checks.json",
+    "sha256": "6210fb1c4b58746d1cfce87992e117733f22cb5504672c6ee632a842519fd0ba",
+    "bytes": 73565503
+  },
+  {
+    "relative_path": "facts/checks/brand=rmh/dt=2026-05-05/checks.json",
+    "sha256": "fcab8219af425a4fa6d8cef7403b21185a464619905faf81c6ba602674b44a12",
+    "bytes": 73647018
+  },
+  {
+    "relative_path": "facts/checks/brand=rmh/dt=2026-05-06/checks.json",
+    "sha256": "e1b922d306e4cd04b5154dd3df4f04a7d5b8adf34a81400e244de8cb94295d82",
+    "bytes": 78477677
+  },
+  {
+    "relative_path": "facts/checks/brand=rmh/dt=2026-05-07/checks.json",
+    "sha256": "2ee8a2b5f75f114e1c296da2907c09dcb791e55110a228678e9374e480d40e60",
+    "bytes": 85315924
+  },
+  {
+    "relative_path": "facts/checks/brand=rmh/dt=2026-05-08/checks.json",
+    "sha256": "b365faea0de944c63126090da359e0b03343fbc928cdb8e5d44587085413a1b2",
+    "bytes": 120611502
+  },
+  {
+    "relative_path": "facts/checks/brand=rmh/dt=2026-05-09/checks.json",
+    "sha256": "3d7bb2ef9bc79f9b31fc8816a2933c794ba8bb71c3cfd1390c1599afc85eb72c",
+    "bytes": 123744048
+  },
+  {
+    "relative_path": "facts/checks/brand=rmh/dt=2026-05-10/checks.json",
+    "sha256": "dc86ee35407ed0971ac7c2288f0199ef08a83b0a1706efe050dc6e307130f491",
+    "bytes": 167836619
+  },
+  {
+    "relative_path": "facts/checks/brand=rmh/dt=2026-05-11/checks.json",
+    "sha256": "c0967182f9f2e1de99bf7aeb7f1d7b1d32014bddde4bea81e76e92fa7f7014c1",
+    "bytes": 79852590
+  },
+  {
+    "relative_path": "facts/checks/brand=rmh/dt=2026-05-12/checks.json",
+    "sha256": "56e0f4de42503ee5a1ea582948782a621cb5906cb2d00c9eebef42fb2564befd",
+    "bytes": 77703990
+  },
+  {
+    "relative_path": "facts/checks/brand=rmh/dt=2026-05-13/checks.json",
+    "sha256": "56bd53b2cddd81cacbee3b5833107a36fcec7ed279867de2dd6a009d821aa1fc",
+    "bytes": 87466118
+  },
+  {
+    "relative_path": "facts/checks/brand=rmh/dt=2026-05-14/checks.json",
+    "sha256": "fff4ce5304c486e1b2aad62a9f7f5af09cded85efb07597abfcfa54848c921de",
+    "bytes": 97944979
+  },
+  {
+    "relative_path": "facts/checks/brand=rmh/dt=2026-05-15/checks.json",
+    "sha256": "10a4b1dac2ed1e579c16a8535f81fdec234a9ab075d1aea148d9f1005d9d6c3d",
+    "bytes": 134729716
+  },
+  {
+    "relative_path": "facts/checks/brand=rmh/dt=2026-05-16/checks.json",
+    "sha256": "96d6a126f553ba72c4fe2404975c246317eab063e5b0528cd7b9d680942542dd",
+    "bytes": 127725316
+  },
+  {
+    "relative_path": "facts/checks/brand=rmh/dt=2026-05-17/checks.json",
+    "sha256": "9596e01d2c3357308d49c5b756a8c71087ece0dd0fcbed38f3a2f4876746be9e",
+    "bytes": 109801212
+  },
+  {
+    "relative_path": "facts/checks/brand=rmh/dt=2026-05-18/checks.json",
+    "sha256": "d73c5ccf0c620ba4a88dd147d7ca40049fdf8ef4f32559f51509e65695fbd134",
+    "bytes": 82798241
+  },
+  {
+    "relative_path": "facts/checks/brand=rmh/dt=2026-05-19/checks.json",
+    "sha256": "ff8271889a539ba9bbf36c93df69afd42702915ad0df2ac4de5d85cc22727bc0",
+    "bytes": 85727849
+  },
+  {
+    "relative_path": "facts/checks/brand=rmh/dt=2026-05-20/checks.json",
+    "sha256": "fd965925b5dbff866ffe3829356b48a7acea5e7c5827f865c409ba5a82afab2f",
+    "bytes": 98507248
+  },
+  {
+    "relative_path": "facts/checks/brand=rmh/dt=2026-05-21/checks.json",
+    "sha256": "bc3d1599e5d034ce2457b5e8bf0b25a43e47fd82a53a0ce540daec33b59b181f",
+    "bytes": 111343835
+  },
+  {
+    "relative_path": "facts/checks/brand=rmh/dt=2026-05-22/checks.json",
+    "sha256": "d770e84951a04d322442c7650b14b937a8ecb840b12d0d44b02ef90d8f20e1ae",
+    "bytes": 140789616
+  },
+  {
+    "relative_path": "facts/checks/brand=rmh/dt=2026-05-23/checks.json",
+    "sha256": "91c7839efb10fd5a723f31fbcc0f034f1f78a550a31e091b3472bb9481cc4a48",
+    "bytes": 124658269
+  },
+  {
+    "relative_path": "facts/checks/brand=rmh/dt=2026-05-24/checks.json",
+    "sha256": "4a07e39c4ef9ea55f68a037cb2c2c7324b8c52addab9de9e36a4a055504cc5f8",
+    "bytes": 116171324
+  },
+  {
+    "relative_path": "facts/checks/brand=rmh/dt=2026-05-25/checks.json",
+    "sha256": "8b7e502b5aebc608fbb6f2488c8d30f4cbe699c38b54f1227d45063d198c6a9a",
+    "bytes": 94637789
+  },
+  {
+    "relative_path": "facts/checks/brand=rmh/dt=2026-05-26/checks.json",
+    "sha256": "34782ae174ab36a40a33a0987824ce40f091ab051fee5bbcc3a9e9f7b29f4261",
+    "bytes": 78103730
+  },
+  {
+    "relative_path": "facts/checks/brand=rmh/dt=2026-05-27/checks.json",
+    "sha256": "39e6863463f56e30e5d7d31c853ce0165e5f712a50be6049edc072d904781c2b",
+    "bytes": 88916226
+  },
+  {
+    "relative_path": "facts/checks/brand=rmh/dt=2026-05-28/checks.json",
+    "sha256": "7e73de232f987207acf8eb920636deaf32d08711682068e1be16f17ee9bfb5d6",
+    "bytes": 100733527
+  },
+  {
+    "relative_path": "facts/checks/brand=rmh/dt=2026-05-29/checks.json",
+    "sha256": "b43c872058e0a94a71e15531fdeb837873b9c40317a1af7e03c7c360b6530acb",
+    "bytes": 135795226
+  },
+  {
+    "relative_path": "facts/checks/brand=rmh/dt=2026-05-30/checks.json",
+    "sha256": "803958524df6dbb30dd2c54042a356233bbd635f10ddb651a275ff3a50a8e284",
+    "bytes": 128576055
+  },
+  {
+    "relative_path": "facts/checks/brand=rmh/dt=2026-05-31/checks.json",
+    "sha256": "216cce1f45699b568a8d91e8bf3d33413eba0a40852f6fb77299b717a9bac5d3",
+    "bytes": 113945754
+  },
+  {
+    "relative_path": "facts/checks/brand=rmh/dt=2026-06-01/checks.json",
+    "sha256": "9b3eae284b00bb59c3df1456ffcc765d7f64c01ea6ced26a2996e03886a2dea6",
+    "bytes": 85753197
+  },
+  {
+    "relative_path": "facts/checks/brand=rmh/dt=2026-06-02/checks.json",
+    "sha256": "4b67408299afa1824dff279ad12e5dcee25ba9b13589dd2ad3c4e018dd328ef6",
+    "bytes": 81403382
+  },
+  {
+    "relative_path": "facts/checks/brand=rmh/dt=2026-06-03/checks.json",
+    "sha256": "5b3dba7640f79b8a8c89dc57471f1509f19175ed085be7e16cc44db1896e0ec6",
+    "bytes": 89717965
+  },
+  {
+    "relative_path": "facts/checks/brand=rmh/dt=2026-06-04/checks.json",
+    "sha256": "f28d69c16fa4668e9c90bddb039df58515e9b5af5fb103a338beea5adce9e6aa",
+    "bytes": 94101119
+  },
+  {
+    "relative_path": "facts/checks/brand=rmh/dt=2026-06-05/checks.json",
+    "sha256": "12f49ea2feb67fde248fbbd201cc7b6bfedcc8f6610bdc69eff5b91bd6cac0be",
+    "bytes": 122367512
+  },
+  {
+    "relative_path": "facts/checks/brand=rmh/dt=2026-06-06/checks.json",
+    "sha256": "08fb9e70ea0f472b61d934616c2e7939186670a05280d452cd942e32fe095763",
+    "bytes": 121529680
+  },
+  {
+    "relative_path": "facts/checks/brand=rmh/dt=2026-06-07/checks.json",
+    "sha256": "4c0b396fec4d6824ce43081af76cba8bb5a93eea500a3bbf505edab0c65cefa2",
+    "bytes": 107036658
+  },
+  {
+    "relative_path": "facts/checks/brand=rmh/dt=2026-06-08/checks.json",
+    "sha256": "428599fce113e848a523887bddbd2ac98a8952cc250b49ef6f7ba7579fc176d8",
+    "bytes": 81506700
+  },
+  {
+    "relative_path": "facts/checks/brand=rmh/dt=2026-06-09/checks.json",
+    "sha256": "2de87e8ee77895a7b69fb3c3c646bbdd335867603edf04fd3332a84e522744fc",
+    "bytes": 77258133
+  },
+  {
+    "relative_path": "facts/checks/brand=rmh/dt=2026-06-10/checks.json",
+    "sha256": "c55e7c0999078fa8d5fe9778f146adf3d2218cd993a5436384368b9e06028395",
+    "bytes": 84341846
+  },
+  {
+    "relative_path": "facts/checks/brand=rmh/dt=2026-06-11/checks.json",
+    "sha256": "af2e41960467ae354f704b4acac8c80a60fec56c15a774172d3917a0d4ddb40c",
+    "bytes": 91786698
+  },
+  {
+    "relative_path": "facts/checks/brand=rmh/dt=2026-06-12/checks.json",
+    "sha256": "6a5be6934338cac0c7d24120ce77c68309e10bdd37fac708f3037e413d3c04c0",
+    "bytes": 124057008
+  },
+  {
+    "relative_path": "facts/checks/brand=rmh/dt=2026-06-13/checks.json",
+    "sha256": "3e48c85547686a0105a7afb060ac503da77a9cba7f848b98d46ce811d0d26fdf",
+    "bytes": 118811076
+  },
+  {
+    "relative_path": "facts/checks/brand=rmh/dt=2026-06-14/checks.json",
+    "sha256": "a20cfad1207f6b8aed9f3a68effc4fc7cf71a8465ce46e6b9a0c53648aa0bcb4",
+    "bytes": 108921717
+  },
+  {
+    "relative_path": "facts/checks/brand=rmh/dt=2026-06-15/checks.json",
+    "sha256": "138bebe6e261a84543b7fe94cb2ce3b6a03aed26d0e61094bafaad8b25cea92b",
+    "bytes": 80176729
+  },
+  {
+    "relative_path": "facts/checks/brand=rmh/dt=2026-06-16/checks.json",
+    "sha256": "a33591733e70ef563d50ca9d0172401d56fb0f5779245bb0dd75cc7cce1f602b",
+    "bytes": 77494398
+  },
+  {
+    "relative_path": "facts/checks/brand=rmh/dt=2026-06-17/checks.json",
+    "sha256": "313c1afd25e41da76cb05d5e9be9ef152d8b624640d72d9ea7dec164cfdf2950",
+    "bytes": 82657341
+  },
+  {
+    "relative_path": "facts/checks/brand=rmh/dt=2026-06-18/checks.json",
+    "sha256": "6c04450af96a0318a8fc2d6e743a8730ab0afcc08eb5dcf57188321648c6e24a",
+    "bytes": 100972916
+  },
+  {
+    "relative_path": "facts/checks/brand=rmh/dt=2026-06-19/checks.json",
+    "sha256": "6c375b9665b6e06821b2644d59e419a9687d06752e235a5075cdfbf089ec0014",
+    "bytes": 118495656
+  },
+  {
+    "relative_path": "facts/checks/brand=rmh/dt=2026-06-20/checks.json",
+    "sha256": "0f5d1ccf57c100bc388334a69036f38bb95ab59963a544b82a75d5fa7e1f2b6c",
+    "bytes": 113142144
+  },
+  {
+    "relative_path": "facts/checks/brand=rmh/dt=2026-06-21/checks.json",
+    "sha256": "55912a04ba7fd5025b369415a4a261e4c98965a879f1c76a3f15d3519615fe10",
+    "bytes": 140676801
+  },
+  {
+    "relative_path": "facts/checks/brand=rmh/dt=2026-06-22/checks.json",
+    "sha256": "154b44aada857c1c5c5cad5c8ed8df1ffed4fdbcdce84836c25d17bc7bcc5b32",
+    "bytes": 77508606
+  },
+  {
+    "relative_path": "facts/checks/brand=rmh/dt=2026-06-23/checks.json",
+    "sha256": "af0a5ce48c1337014e3c2d2afe29fa6924e7cca2a132b9b1fec63c0c399eb470",
+    "bytes": 74963799
+  },
+  {
+    "relative_path": "facts/checks/brand=rmh/dt=2026-06-24/checks.json",
+    "sha256": "654d248401b2efdb1906e6077613fa3202f2566793f6560406ade4698f6722ea",
+    "bytes": 80613785
+  },
+  {
+    "relative_path": "facts/checks/brand=rmh/dt=2026-06-25/checks.json",
+    "sha256": "fc4840eb486cadf898e601dcb9760b707b7affacb8bdc6c779c9fe556c3652bd",
+    "bytes": 88165354
+  },
+  {
+    "relative_path": "facts/checks/brand=rmh/dt=2026-06-26/checks.json",
+    "sha256": "8ac42282d8e87475b0a303bdd7cbff0754989134979f6616e6567bb98a9edc60",
+    "bytes": 116947176
+  },
+  {
+    "relative_path": "facts/checks/brand=rmh/dt=2026-06-27/checks.json",
+    "sha256": "e4e4a2d8b78c615bf571624926ce4fc63c510f909e652ed070445fc72d234075",
+    "bytes": 109855652
+  },
+  {
+    "relative_path": "facts/checks/brand=rmh/dt=2026-06-28/checks.json",
+    "sha256": "3ac9bf130686af295c05e1032ed780ab493b12791e9439552077dd7275d1c7c8",
+    "bytes": 100369551
+  },
+  {
+    "relative_path": "facts/checks/brand=rmh/dt=2026-06-29/checks.json",
+    "sha256": "37b5c59ca6b33d38770eb68c8c4cae053352105f17861c20ee3304bd3bd0baae",
+    "bytes": 78064317
+  },
+  {
+    "relative_path": "facts/checks/brand=rmh/dt=2026-06-30/checks.json",
+    "sha256": "012842a99f7f209d884fb8065c9d1870e7d7cc26cb779cd17c368a2bed495c38",
+    "bytes": 79500509
+  },
+  {
+    "relative_path": "facts/checks/brand=rmh/dt=2026-07-01/checks.json",
+    "sha256": "bec3b4aa2e95747ccb99412c343d01adc4ed3cf91f1c38a77837b1ef76cb87a7",
+    "bytes": 88810660
+  },
+  {
+    "relative_path": "facts/checks/brand=rmh/dt=2026-07-02/checks.json",
+    "sha256": "6d74ba11f38f345764ae23a144f397d61ad18e8a7b43db94fc664b90144e4c32",
+    "bytes": 105624353
+  },
+  {
+    "relative_path": "facts/checks/brand=rmh/dt=2026-07-03/checks.json",
+    "sha256": "1aa358dfd1fc91a09b496db7380e69fe4e0ab4e3da4c7a377b82a3ca8c35262f",
+    "bytes": 113330576
+  },
+  {
+    "relative_path": "facts/checks/brand=rmh/dt=2026-07-04/checks.json",
+    "sha256": "340df2fe8406ab506beb0d3322dcfb6afe32380047e5ce53f84df42ac7224281",
+    "bytes": 91228519
+  },
+  {
+    "relative_path": "facts/checks/brand=rmh/dt=2026-07-05/checks.json",
+    "sha256": "716ad17d66d8f41d2ff9ccfe7a5a7825c4c0049d32f42ba6f5e375ba33955e00",
+    "bytes": 94213148
+  },
+  {
+    "relative_path": "facts/checks/brand=rmh/dt=2026-07-06/checks.json",
+    "sha256": "f510a91fd818877baad99857ad2cad32263bf06bf6047ab648272d57ddefacc3",
+    "bytes": 78029114
+  },
+  {
+    "relative_path": "facts/checks/brand=rmh/dt=2026-07-07/checks.json",
+    "sha256": "de623af70463a7aed8f2629544cf25596e203d0aa9001b8956dd11ca7068aeed",
+    "bytes": 80548572
+  },
+  {
+    "relative_path": "facts/checks/brand=rmh/dt=2026-07-08/checks.json",
+    "sha256": "1030977e26559f188ba49edc53a9421daec9cf0ffe31637186b133108580f533",
+    "bytes": 84895656
+  },
+  {
+    "relative_path": "facts/checks/brand=rmh/dt=2026-07-09/checks.json",
+    "sha256": "0a05e5327451845afa171421e34fb51f3dd17e510c8afeaa1a14fb7ff612d4d0",
+    "bytes": 94350944
+  },
+  {
+    "relative_path": "facts/checks/brand=rmh/dt=2026-07-10/checks.json",
+    "sha256": "0f213a6dfdc7abea33590ed21703324a36e672222f44c43f388ada329617dc92",
+    "bytes": 124779881
+  },
+  {
+    "relative_path": "facts/checks/brand=rmh/dt=2026-07-11/checks.json",
+    "sha256": "e7a5efe6bcf16c1c40c300c1fde1641687e5a6427776906412f6bdd34d8f8d7d",
+    "bytes": 115299274
+  },
+  {
+    "relative_path": "facts/checks/brand=rmh/dt=2026-07-12/checks.json",
+    "sha256": "c86e68fa4cb473042f92ce3f02c60639503f931dfc93b5ceff89e75cfcb53e02",
+    "bytes": 104398319
+  },
+  {
+    "relative_path": "facts/checks/brand=rmh/dt=2026-07-13/checks.json",
+    "sha256": "9bd076d8600bf48d8a1d308bab6e2df912c7298569b631804696fee93b8b12f9",
+    "bytes": 81309864
+  },
+  {
+    "relative_path": "facts/checks/brand=rmh/dt=2026-07-14/checks.json",
+    "sha256": "1bc4876b2100b8aa1eb6c581f46f0b96be2ea29aeb57693e98f5f6d92c86d84f",
+    "bytes": 75479950
+  },
+  {
+    "relative_path": "facts/checks/brand=rmh/dt=2026-07-15/checks.json",
+    "sha256": "674eaf138f83b4fa02d3c201932a21605cd9787fa6ea2c7ac63df13197ab9e25",
+    "bytes": 84361848
+  },
+  {
+    "relative_path": "facts/checks/brand=rmh/dt=2026-07-16/checks.json",
+    "sha256": "b7989bc61dbcdbd0b77eb526af9d81341eaa4a233853c9c5e9bdc457efef072a",
+    "bytes": 92578384
+  },
+  {
+    "relative_path": "facts/checks/brand=rmh/dt=2026-07-17/checks.json",
+    "sha256": "5e87b4a6bae7f423993b1512c1b7141b0e3c860ed2b1c3b6eeaef4e27d856b25",
+    "bytes": 121975639
+  },
+  {
+    "relative_path": "facts/checks/brand=rmh/dt=2026-07-18/checks.json",
+    "sha256": "40be8efc5b863093bfa581192e8a4323d74ded2452e64793fdbd5a88d7d6db9d",
+    "bytes": 116921561
+  },
+  {
+    "relative_path": "facts/checks/brand=rmh/dt=2026-07-19/checks.json",
+    "sha256": "1fb13dee122bf74022ac4cf5c1b417409e4966736c1bb163bdac0b9ba92d89bd",
+    "bytes": 101334723
+  },
+  {
+    "relative_path": "facts/checks/brand=rmh/dt=2026-07-20/checks.json",
+    "sha256": "9ac6882d09d74b474f84cacc8ef4363223ee2262ca0c6bd0e2fd3ddb274e532e",
+    "bytes": 77839967
+  },
+  {
+    "relative_path": "facts/checks/brand=rmh/dt=2026-07-21/checks.json",
+    "sha256": "8b040a8f642f6ffd74babecad826e9ad88580f187a5679024589a55d49081e72",
+    "bytes": 73760372
+  },
+  {
+    "relative_path": "facts/checks/brand=rmh/dt=2026-07-22/checks.json",
+    "sha256": "6cc9401009f4741cac47543b69f4d572514dd33f241a3f5b4fce4d659466a085",
+    "bytes": 81311218
+  },
+  {
+    "relative_path": "facts/checks/brand=rmh/dt=2026-07-23/checks.json",
+    "sha256": "a03a1c21de58f176f361e76b03e8f321d25560b2e4733088a9f4669173a1e411",
+    "bytes": 86955662
+  },
+  {
+    "relative_path": "facts/checks/brand=rmh/dt=2026-07-24/checks.json",
+    "sha256": "718296f8e86ce79ec1d155b36dc732b96807956d87c7fb521dffd025cb7dc3ba",
+    "bytes": 117546455
+  },
+  {
+    "relative_path": "facts/checks/brand=rmh/dt=2026-07-25/checks.json",
+    "sha256": "5a48ba37bf6382cdde0e48098ddb8dbefc6eef4a7d7f5c9d79f4e9bfa9133e73",
+    "bytes": 109751060
+  },
+  {
+    "relative_path": "facts/checks/brand=rmh/dt=2026-07-26/checks.json",
+    "sha256": "babf8e6823225b5d6e063bf7b6bf3823c87875ba259083e48ff95ec64d049bef",
+    "bytes": 97078027
+  },
+  {
+    "relative_path": "facts/checks/brand=rmh/dt=2026-07-27/checks.json",
+    "sha256": "77e0e79e18bd54cf51c0cc66b75c17bec3b99b3f38a0e09a9157a7869cda996a",
+    "bytes": 74800806
+  },
+  {
+    "relative_path": "facts/checks/brand=rmh/dt=2026-07-28/checks.json",
+    "sha256": "738480ca6f0c580165f2994a828ee2a92ff3cf6a17a32fbd13f440639282d8b2",
+    "bytes": 73133696
+  },
+  {
+    "relative_path": "facts/checks/brand=rmh/dt=2026-07-29/checks.json",
+    "sha256": "46898d0ad7c93e2e86224f749fe12ef27b5ccb0f69e543a6e92fc8431a0b28e0",
+    "bytes": 81598629
+  },
+  {
+    "relative_path": "facts/checks/brand=rmh/dt=2026-07-30/checks.json",
+    "sha256": "b2ba92cd806dffcf7faff9e1b69c0ea4107b1eff2a7ab53d78bdc7ab271d43c2",
+    "bytes": 89454090
+  },
+  {
+    "relative_path": "facts/checks/brand=rmh/dt=2026-07-31/checks.json",
+    "sha256": "9c9d9ac03b70ee7de0206a6c0f16f423f666ba9e5bef355fc9c72da2f0cdafb9",
+    "bytes": 119328912
+  },
+  {
+    "relative_path": "facts/checks/brand=rmh/dt=2026-08-01/checks.json",
+    "sha256": "287f6a69c9d2938b2a567161454205f1282c22ea093bcb933339565a5734ce50",
+    "bytes": 111769499
+  },
+  {
+    "relative_path": "facts/checks/brand=rmh/dt=2026-08-02/checks.json",
+    "sha256": "a19ec3d6852e0530b56c5c04dc9bf265db864ebed78b16ea8d8a7717a379fa44",
+    "bytes": 95477394
+  },
+  {
+    "relative_path": "facts/checks/brand=rmh/dt=2026-08-03/checks.json",
+    "sha256": "9c643952281fe73066f998c31efc95d833ff8d72e5a0bdd4b7faf02b4f49245d",
+    "bytes": 75613236
+  },
+  {
+    "relative_path": "facts/checks/brand=rmh/dt=2026-08-04/checks.json",
+    "sha256": "f2786a9315f1d2c453b0708263bf85df90a2848c12f2896e2f3e04c74c6757f4",
+    "bytes": 70504846
+  },
+  {
+    "relative_path": "facts/checks/brand=rmh/dt=2026-08-05/checks.json",
+    "sha256": "1eb285c5e2a4968a4df2ea018ce6be2d906ea8af9f1961c60e8b340d9440a5c0",
+    "bytes": 74848640
+  },
+  {
+    "relative_path": "facts/checks/brand=rmh/dt=2026-08-06/checks.json",
+    "sha256": "358cdba074b1434c1426824b3c438849a770b820e5f9cf23836630c04408f04f",
+    "bytes": 83732303
+  },
+  {
+    "relative_path": "facts/checks/brand=rmh/dt=2026-08-07/checks.json",
+    "sha256": "0d7e966cc9e63c6ac5d27ac0e7707c6e0c0152f040e43f5e110df60bba79f7e4",
+    "bytes": 109639750
+  },
+  {
+    "relative_path": "facts/checks/brand=rmh/dt=2026-08-08/checks.json",
+    "sha256": "8b611a80bed2c0b74ac1e0a30be02b5885674568e94f0041414cdebb71d1ffaf",
+    "bytes": 107036727
+  },
+  {
+    "relative_path": "facts/checks/brand=rmh/dt=2026-08-09/checks.json",
+    "sha256": "6c1a1a71b1f7fab5602ac630c4a27ac1452658bb438fe7bdad4019f7d98b5f3c",
+    "bytes": 92706232
+  },
+  {
+    "relative_path": "facts/checks/brand=rmh/dt=2026-08-10/checks.json",
+    "sha256": "af904ee70e3a90e82ec5de7a2b8ae1202f0cc43edec8e334a6f7a02f1efd1de6",
+    "bytes": 70165515
+  },
+  {
+    "relative_path": "facts/checks/brand=rmh/dt=2026-08-11/checks.json",
+    "sha256": "369602694e5deeaaf3791169c09b7f705e31df7d68d6db5d8f00cff4b6836c25",
+    "bytes": 64283743
+  },
+  {
+    "relative_path": "facts/checks/brand=rmh/dt=2026-08-12/checks.json",
+    "sha256": "71081de151400548fd30dcd68a787429f83fcbc81c482888bfa2c2b86d01673e",
+    "bytes": 73050925
+  },
+  {
+    "relative_path": "facts/checks/brand=rmh/dt=2026-08-13/checks.json",
+    "sha256": "c0d3cdbbd9c56a121a98a7f53ab0cd0790f83cc37c3ee28dba8a29a6fcc3965e",
+    "bytes": 81282555
+  },
+  {
+    "relative_path": "facts/checks/brand=rmh/dt=2026-08-14/checks.json",
+    "sha256": "085e6e0b5951593a6786fbf5c52c10e492de570bbb43129fe7305f507ac0ae70",
+    "bytes": 107938928
+  },
+  {
+    "relative_path": "facts/checks/brand=rmh/dt=2026-08-15/checks.json",
+    "sha256": "c6b5fc695eb599ebec0b24366793c27d5161f21235b27f83910c6f94a882db46",
+    "bytes": 104439785
+  },
+  {
+    "relative_path": "facts/checks/brand=rmh/dt=2026-08-16/checks.json",
+    "sha256": "001fa7900b689098dca8e7f1321760fc1516dc97cd7c46c068ae8b7dab9fc504",
+    "bytes": 90521861
+  },
+  {
+    "relative_path": "facts/checks/brand=rmh/dt=2026-08-17/checks.json",
+    "sha256": "e045a95e9a02abd58a730705de1582dac1a43b3477ed18e3e1773c0ef702da47",
+    "bytes": 67920512
+  },
+  {
+    "relative_path": "facts/checks/brand=rmh/dt=2026-08-18/checks.json",
+    "sha256": "65b33f5be8da942b342fb8f5b1a712d1fb6f1aaef76ee7955a9ac13867073569",
+    "bytes": 63537556
+  },
+  {
+    "relative_path": "facts/checks/brand=rmh/dt=2026-08-19/checks.json",
+    "sha256": "d8405942039d64ed85dd28f0bc35fcefacd6604207a5f76545db6f151c38be68",
+    "bytes": 69856542
+  },
+  {
+    "relative_path": "facts/checks/brand=rmh/dt=2026-08-20/checks.json",
+    "sha256": "5f7db2eac1577805dd5646cf52629de91d576d2ad458f75fbe9f0f1ae08e6ab1",
+    "bytes": 78059950
+  }
+]
