@@ -1,39 +1,55 @@
 # Five-minute English presentation script
 
-Eight main slides, followed by two appendix slides for questions. Rehearse at roughly 130 words per minute. Source citations and execution-status notes are not spoken automatically.
+Eight main slides and two appendix slides for questions. The speaking text has approximately 582 words.
 
 ## Slide 1
 
-00:00–00:25. Imagine reviewing more than two million restaurant checks. Which ones deserve attention, and can we trust the numbers behind that decision? Our Phase 2 deliverable builds the data foundation for answering that question. We audited 2,142,846 checks from 127 locations over 115 days. I will explain the workflow, its quality controls and the operational decisions it supports.
+00:00–00:25. If you flagged a restaurant check as suspicious, could you trace every number back to its source? Our Phase 2 pipeline provides that foundation. We processed 2,142,846 checks from 127 locations across 115 days. Today I will show how the workflow preserves the data, validates its outputs and supports focused operational review.
+
+Sources and scope: runtime_evidence.json, runtime_job_1_validation.csv and source_audit.json. Scope: 2026-04-28 through 2026-08-20.
 
 ## Slide 2
 
-00:25–01:00. The source is a fixed export of complete JSON arrays. A preparation task converts them into smaller JSON Lines files while preserving values and source paths. Silver standardizes types and checks dates, references and identifiers. Unusable records remain in quarantine with reasons. Gold prepares the business metrics, and a separate validation task reconciles the outputs before acceptance. The historical EDA stays in a separate schema for comparison.
+00:25–01:00. The source contains complete daily JSON arrays. Our first processing attempt exceeded the JSON reader’s memory. We added a preparation task that reads one check at a time and writes smaller files, with one check per JSON line. Silver standardizes fields and enriches them with location and channel references. Gold prepares reporting metrics. A separate acceptance task reconciles the results. Every stage retains the original file lineage.
+
+Sources and scope: prepare_checks_jsonl_source.py, mv_checks_cleaned.py and the two Gold SQL libraries. Preparation source inventory SHA256 matches the independent audit.
 
 ## Slide 3
 
-01:00–01:40. The transformations protect the meaning of the data. A check is identified by date, location and check ID together. Payments and item discounts become separate child tables. Exploding both arrays in one join could multiply records and inflate totals. A check’s tip is the sum of its payment Gratuity values. We compare the magnitude of that sum because the usual sign is negative. Reference joins add readable location and channel labels without changing the check population.
+01:00–01:40. The transformations preserve the meaning of a check. We identify it with business date, location and check ID together. Payments and discounts become separate child tables, so expanding one array cannot multiply the other. A check’s tip equals the sum of its payment Gratuity values. We compare the magnitude of that sum because the usual source sign is negative. We also keep ticket discounts separate from item discounts until the business confirms whether their amounts overlap.
+
+Sources and scope: DATA_CONTRACT.md and mv_checks_cleaned.py. EmployeeId in a payment identifies its actor, without a verified waiter-role mapping.
 
 ## Slide 4
 
-01:40–02:20. Quality rules specify an action. Critical reference problems fail publication. Unusable checks go to quarantine, and a nonempty quarantine fails the acceptance gate until review. Empty payment lists remain operational exceptions: they mean no payment record exists in that list, not that a customer necessarily failed to pay. Our independent audit found 3,856 such checks and no duplicate composite keys. Runtime validation also checks that no source rows disappear and that child-event counts and payment sums reconcile.
+01:40–02:20. Each quality rule has a defined response. Invalid reference dimensions stop publication. Unusable checks retain their evidence in quarantine, and the acceptance task rejects a nonempty quarantine. Empty payment lists remain visible for investigation. The accepted run contains all 2,142,846 checks, with zero duplicate keys, corrupt records or missing dates. We retained 3,856 checks with empty payment lists. That describes missing records in this export. Accounting reconciliation must establish whether customers actually paid.
+
+Sources and scope: runtime_job_1_validation.csv and mv_quality_metrics.sql. Blocking results all passed. Empty payment lists remain in the published population.
 
 ## Slide 5
 
-02:20–02:55. The job prepares the source files, refreshes the pipeline, then validates its outputs. Each task requires the previous task to succeed. We allow one concurrent run and bounded retries for processing failures. Failed data checks require investigation. Audit records use run ID plus metric, preventing duplicate audit rows on retry. A second unchanged-source run tests consistency against the prior accepted run. The schedule stays paused; actual run IDs and durations must come from Databricks.
+02:20–02:55. The job runs three tasks in order: prepare the files, refresh the pipeline, then validate its outputs. Each task requires the previous task to succeed. The first complete job finished successfully in 19 minutes and 34 seconds. All 28 audit results passed. Its source and published-check fingerprints matched the prior accepted manual run. Bounded retries handle processing failures. Failed data checks require review, and the job remains manually triggered during verification.
+
+Sources and scope: runtime_evidence.json and runtime_job_1_validation.csv. Job ID 54448068766203. Run ID 469997930036472. Screenshot duration 19m 34s. All 28 audit rows passed, including 24 blocking results. A second full job run is still pending evidence.
 
 ## Slide 6
 
-02:55–03:30. We selected the engineering features for this workload. Batch fits a static historical export. Materialized views store computed results for repeated analysis. Liquid clustering organizes valid checks around date and location filters, but we will measure query profiles before claiming a speed improvement. Expectations give each quality rule a clear warn or fail policy. Streaming remains a future option when a reliable append-only feed exists.
+02:55–03:30. Our engineering choices fit the current source. Batch suits a fixed historical export. Materialized views store computed reporting results and refresh them through Lakeflow. Liquid clustering uses business date and location, which match common filters. Query profiles are still needed to measure its performance benefit. Expectations distinguish monitored exceptions from blocking integrity failures. Preparation reuses verified output files, but still reads source and output bytes to check their hashes. Incremental ingestion is a future improvement.
+
+Sources and scope: README.md engineering choices and https://docs.databricks.com/aws/en/ldp/concepts/refresh. Clustering configuration is implemented in code. No measured acceleration, cost reduction or full incremental-ingestion claim.
 
 ## Slide 7
 
-03:30–04:20. The baseline supports a focused operational question. Locations 87, 1 and 141 account for 71.08 percent of checks whose payment list is empty. That is the share of all missing-payment cases, not the missing-payment rate inside each location. We would prioritize source-system reconciliation there and compare local rates before interpreting concentration. Across all checks, 268,590 have a discount, a weighted rate of 12.53 percent. Gold makes those denominators explicit. These findings come from the audited source and historical EDA. The new pipeline still needs runtime evidence.
+03:30–04:20. The data supports a practical investigation priority. In the audited source and Week 4 analysis, locations 87, 1 and 141 account for 71.08 percent of checks with empty payment lists. That is their share of missing-payment cases. Their local missing-payment rates answer a separate question. We would reconcile the source-system records at those locations first. The accepted Gold coverage also confirms 268,590 discounted checks, or 12.53 percent of all checks. Explicit denominators help the business compare locations fairly and investigate exceptions without treating concentration as proof of misconduct.
+
+Sources and scope: Location concentration: historical_reports_week4_tickets_sin_pago_por_sucursal.csv and source audit. Runtime coverage: runtime_job_1_validation.csv. Specific location concentration still uses the historical baseline until the Gold query export is captured.
 
 ## Slide 8
 
-04:20–05:00. Our value is a repeatable foundation for investigation: each metric has a defined population, and each exception has a source and handling policy. The dry run passed, but the first processing update hit a JSON-reader memory limit. We implemented bounded file preparation, passed 24 local tests and compared every record in the largest source file. We still need a successful Databricks run and an unchanged-source rerun. That evidence is the acceptance gate before operational use and future anomaly models.
+04:20–05:00. We now have a working workflow with traceable data and a passing acceptance audit. Payment and discount event counts reconcile with their parent checks, and the repeat test preserved the published-check fingerprint. The next business step is to resolve missing-payment records and confirm discount definitions and permissions. The next engineering step is to verify the second complete job run and measure each task’s cost and duration. This gives the team a reliable starting point for investigation and future anomaly models.
 
-## Before the final presentation
+Sources and scope: runtime_evidence.json, runtime_job_1_validation.csv and RUBRIC_EVIDENCE.md. Fingerprint scope covers selected source fields and published checks. Gold totals reconcile separately. Second full job and performance evidence remain pending.
 
-The present script records the observed dry-run success, failed processing update and locally tested fix. Successful processing remains pending. Update statements and refresh the slide deck only after capturing real update/run IDs, validation results and a same-source rerun. Keep the schedule paused until accepted.
+## Current verification boundary
+
+The first complete job and its comparison with a prior manual run are verified. Keep the second complete job run pending until its screenshot and validator CSV are captured. Refresh this statement when that evidence arrives.

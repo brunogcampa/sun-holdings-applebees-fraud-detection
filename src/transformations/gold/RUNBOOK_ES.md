@@ -1,5 +1,12 @@
 # Guía de ejecución: segundo entregable
 
+## Estado verificado
+
+El job `applebees-phase2-daily-dev` (ID `54448068766203`) completó la corrida
+`469997930036472` en **19 min 34 s**. Las 28 filas de auditoría pasaron, incluida
+la comparación de huellas con una corrida manual previa. Las tres tareas usan la
+copia `applebees-phase2-code-v2`. El segundo job completo sigue pendiente de evidencia.
+
 ## 1. Conectar o actualizar el repositorio en Databricks
 
 En Workspace, crea una carpeta Git con el repositorio
@@ -72,7 +79,8 @@ Configura estos parámetros como cadenas de texto:
 | `applebees.start_date` | `2026-04-28` |
 | `applebees.end_date` | `2026-08-20` |
 
-Valida el pipeline. Si hay un error, conserva el texto completo, la biblioteca y
+En el editor, el menú llama **Dry run** a la validación. Valida el pipeline.
+Si hay un error, conserva el texto completo, la biblioteca y
 la línea que indique. No borres tablas o fuentes para intentar resolverlo.
 
 ## 5. Ejecutar una actualización manual
@@ -85,6 +93,15 @@ Ejecuta las primeras consultas de `demo_queries.sql`, sustituyendo el esquema si
 cambiaste el destino. Esperamos 2,142,846 checks, 127 locations, 115 días,
 268,590 checks descontados, 240,699 eventos de ticket y 275,991 de producto.
 Investiga cualquier diferencia: no fuerces las cifras modificando datos.
+
+Una actualización apareció como Completed, pero `silver_checks_assessed` tenía
+0 filas pese a que Raw tenía 2,142,846. El diagnóstico lo detectó antes de aceptar
+los resultados. **Run pipeline with full table refresh**, con todas las tablas,
+restauró la población completa. La causa de ese estado intermedio no quedó
+establecida. Una actualización normal posterior, dentro del job, pasó el gate.
+
+Usa `diagnose_pipeline.sql` para verificar que leídos = evaluados = publicados,
+cuarentena = fuera de período = fechas faltantes = 0, y archivos originales = 115.
 
 ## 6. Ejecutar el validador
 
@@ -110,6 +127,10 @@ Crea un job con tres tareas, reflejando `resources/jobs/daily_orchestration_job.
 3. `validate_outputs`: tipo Notebook, selecciona `validate_pipeline.ipynb`, con
    dependencia de éxito de `refresh_pipeline`. Usa serverless disponible y pasa
    `run_id={{job.run_id}}`, catálogo y esquema. No añadas un cluster inexistente.
+
+Desactiva **Enable serverless auto-optimization** en las tareas Notebook para
+respetar el límite de reintentos. Es una opción distinta del modo Performance
+optimized del job. El YAML incluye `disable_auto_optimization: true`.
 
 Concurrencia máxima: 1. Reintento del pipeline: uno tras 60 segundos. Validador:
 sin reintento automático. Horario propuesto: diario a las 07:00 de Ciudad de
@@ -137,9 +158,10 @@ capturas deben ocultar datos personales y conservar contexto técnico suficiente
 ## 9. Ensayar cinco minutos en inglés
 
 Usa las ocho diapositivas principales y el guion. El apéndice sirve para preguntas.
-Antes de presentar, actualiza el estado de ejecución: mientras no exista una
-ejecución verificable, di que el pipeline está implementado y pendiente de
-validación en Databricks. El análisis histórico sí tiene evidencia independiente.
+La presentación ya refleja el job completo aprobado y la comparación con la
+corrida manual. Mantén pendiente la segunda corrida completa hasta recibir su
+evidencia. Las concentraciones específicas por location conservan su origen
+EDA/histórico hasta exportar la consulta Gold correspondiente.
 
 ## Cómo resolver fallos
 

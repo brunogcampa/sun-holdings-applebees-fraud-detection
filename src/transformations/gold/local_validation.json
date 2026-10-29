@@ -6,11 +6,11 @@
   "result": "PASSED",
   "markdown_links": "PASSED",
   "full_source_audit": "PASSED",
-  "databricks_runtime": "FIRST_UPDATE_FAILED_PHOTON_JSON_OOM; JSONL_FIX_PENDING_RUNTIME",
+  "databricks_runtime": "PASSED_27_DATASETS_AND_COMPLETE_JOB_1",
   "databricks_dry_run": "PASSED_USER_SCREENSHOT",
   "bundle_cli_validation": "NOT_RUN",
-  "sql_spark_execution": "ATTEMPTED; FAILED_SOURCE_JSON_SCAN",
-  "same_source_runtime_rerun": "PENDING",
+  "sql_spark_execution": "PASSED_WITH_USER_EXPORTED_RUNTIME_EVIDENCE",
+  "same_source_runtime_rerun": "PASSED_JOB_1_AGAINST_MANUAL_RUN",
   "presentation": {
     "main_slides": 8,
     "appendix_slides": 2,
@@ -21,5 +21,6 @@
   "databricks_asset_name_collisions": 0,
   "source_notebook_name": "validate_pipeline_source.py",
   "git_text_policy": "LF in all actual text blobs, verified by repository test; .gitattributes alone does not rewrite old blobs",
-  "remaining_CRLF_text_files": 0
+  "remaining_CRLF_text_files": 0,
+  "second_complete_job_run": "PENDING_USER_EVIDENCE"
 }

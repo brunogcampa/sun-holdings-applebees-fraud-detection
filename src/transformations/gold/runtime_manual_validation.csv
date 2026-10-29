@@ -1,0 +1,29 @@
+run_id,recorded_at,metric,actual,expected,passed,severity
+manual_5ac8591deaee4c87ad21ca2d16dc38f1,2026-10-29T17:20:52.120693+00:00,source_rows_assessed,2142846,2142846,true,ERROR
+manual_5ac8591deaee4c87ad21ca2d16dc38f1,2026-10-29T17:20:52.120693+00:00,all_source_rows_accounted_for,2142846,2142846,true,ERROR
+manual_5ac8591deaee4c87ad21ca2d16dc38f1,2026-10-29T17:20:52.120693+00:00,published_population,2142846,2142846,true,ERROR
+manual_5ac8591deaee4c87ad21ca2d16dc38f1,2026-10-29T17:20:52.120693+00:00,gold_daily_reconciles,2142846,2142846,true,ERROR
+manual_5ac8591deaee4c87ad21ca2d16dc38f1,2026-10-29T17:20:52.120693+00:00,gold_locations_reconcile,2142846,2142846,true,ERROR
+manual_5ac8591deaee4c87ad21ca2d16dc38f1,2026-10-29T17:20:52.120693+00:00,gold_channels_reconcile,2142846,2142846,true,ERROR
+manual_5ac8591deaee4c87ad21ca2d16dc38f1,2026-10-29T17:20:52.120693+00:00,missing_dates,0,0,true,ERROR
+manual_5ac8591deaee4c87ad21ca2d16dc38f1,2026-10-29T17:20:52.120693+00:00,published_key_duplicates,0,0,true,ERROR
+manual_5ac8591deaee4c87ad21ca2d16dc38f1,2026-10-29T17:20:52.120693+00:00,corrupt_source_records,0,0,true,ERROR
+manual_5ac8591deaee4c87ad21ca2d16dc38f1,2026-10-29T17:20:52.120693+00:00,quarantined_rows,0,0,true,ERROR
+manual_5ac8591deaee4c87ad21ca2d16dc38f1,2026-10-29T17:20:52.120693+00:00,ticket_event_reconciliation,240699,240699,true,ERROR
+manual_5ac8591deaee4c87ad21ca2d16dc38f1,2026-10-29T17:20:52.120693+00:00,item_event_reconciliation,275991,275991,true,ERROR
+manual_5ac8591deaee4c87ad21ca2d16dc38f1,2026-10-29T17:20:52.120693+00:00,payment_event_reconciliation,2232092,2232092,true,ERROR
+manual_5ac8591deaee4c87ad21ca2d16dc38f1,2026-10-29T17:20:52.120693+00:00,payment_amount_sum_reconciliation,1.430511474609375e-06,<= 0.01 (double aggregation tolerance),true,ERROR
+manual_5ac8591deaee4c87ad21ca2d16dc38f1,2026-10-29T17:20:52.120693+00:00,payment_tip_sum_reconciliation,1.7136335372924805e-07,<= 0.01 (double aggregation tolerance),true,ERROR
+manual_5ac8591deaee4c87ad21ca2d16dc38f1,2026-10-29T17:20:52.120693+00:00,empty_payment_lists_monitor,3856,Monitor; retained for investigation,true,WARN
+manual_5ac8591deaee4c87ad21ca2d16dc38f1,2026-10-29T17:20:52.120693+00:00,timestamp_issues_monitor,0,Review affected records; no automatic correction,true,WARN
+manual_5ac8591deaee4c87ad21ca2d16dc38f1,2026-10-29T17:20:52.120693+00:00,original_snapshot_tickets,2142846,2142846,true,ERROR
+manual_5ac8591deaee4c87ad21ca2d16dc38f1,2026-10-29T17:20:52.120693+00:00,original_snapshot_locations,127,127,true,ERROR
+manual_5ac8591deaee4c87ad21ca2d16dc38f1,2026-10-29T17:20:52.120693+00:00,original_snapshot_observed_days,115,115,true,ERROR
+manual_5ac8591deaee4c87ad21ca2d16dc38f1,2026-10-29T17:20:52.120693+00:00,original_snapshot_discounted_tickets,268590,268590,true,ERROR
+manual_5ac8591deaee4c87ad21ca2d16dc38f1,2026-10-29T17:20:52.120693+00:00,original_snapshot_empty_payment_lists,3856,3856,true,ERROR
+manual_5ac8591deaee4c87ad21ca2d16dc38f1,2026-10-29T17:20:52.120693+00:00,original_snapshot_ticket_events,240699,240699,true,ERROR
+manual_5ac8591deaee4c87ad21ca2d16dc38f1,2026-10-29T17:20:52.120693+00:00,original_snapshot_item_events,275991,275991,true,ERROR
+manual_5ac8591deaee4c87ad21ca2d16dc38f1,2026-10-29T17:20:52.120693+00:00,source_fingerprint,2142846:3507863786310667794794,Versioned source snapshot,true,INFO
+manual_5ac8591deaee4c87ad21ca2d16dc38f1,2026-10-29T17:20:52.120693+00:00,output_fingerprint,2142846:-2753200972392633748389,Published check snapshot,true,INFO
+manual_5ac8591deaee4c87ad21ca2d16dc38f1,2026-10-29T17:20:52.120693+00:00,same_source_rerun_consistency,FIRST_RUN,Run again with the same sources,null,INFO
+manual_5ac8591deaee4c87ad21ca2d16dc38f1,2026-10-29T17:20:52.120693+00:00,run_complete,True,True,true,ERROR

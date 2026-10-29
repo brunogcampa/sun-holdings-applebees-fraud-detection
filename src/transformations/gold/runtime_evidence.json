@@ -1,0 +1,94 @@
+{
+  "verified_on": "2026-10-29",
+  "evidence_basis": "User-exported Databricks SQL/validator CSVs and screenshots; agent independently compared aggregates and fingerprints",
+  "preparation": {
+    "evidence_type": "user_provided_databricks_preparation_output",
+    "date": "2026-10-29",
+    "status": "PASSED",
+    "source_files": 115,
+    "records": 2142846,
+    "source_inventory_sha256": "1742daa297ef6f84f49e255e0d4c6f2374680cdcc7f3bc2fb550a074846d3ef3",
+    "independent_source_inventory_sha256": "1742daa297ef6f84f49e255e0d4c6f2374680cdcc7f3bc2fb550a074846d3ef3",
+    "matches_independent_source_audit": true,
+    "silver_gold_execution_after_fix": "PENDING_PATH_SWITCH_AND_RUN"
+  },
+  "population": {
+    "date": "2026-10-29",
+    "evidence_type": "user_exported_SQL_diagnostic_and_pipeline_table_screenshots",
+    "update_type": "Full refresh all",
+    "population_reconciliation": "PASSED",
+    "metrics": {
+      "01_leidos": 2142846,
+      "02_evaluados": 2142846,
+      "03_publicados": 2142846,
+      "04_cuarentena": 0,
+      "05_fuera_del_periodo": 0,
+      "06_archivos_originales": 115,
+      "07_fechas_faltantes": 0
+    },
+    "observed_table_output_rows": {
+      "gold_daily_metrics": 115,
+      "gold_location_metrics": 127,
+      "gold_channel_metrics": 17,
+      "gold_missing_dates": 0,
+      "gold_duplicate_keys": 0,
+      "gold_quality_issues": 0,
+      "gold_positive_tip_evidence": 3,
+      "silver_locations": 185,
+      "silver_channels": 23
+    },
+    "observed_assessed_expectations": {
+      "met_rules": 10,
+      "unmet_rules": 1,
+      "affected_rows_display": "3.9K",
+      "interpretation": "Consistent with the configured monitored payment_record_available rule and independently audited 3856 empty payment lists; exact runtime monitor count pending validator."
+    },
+    "pipeline_update_id": "NOT_CAPTURED",
+    "publication_validator": "PENDING",
+    "job_and_same_source_rerun": "PENDING",
+    "earlier_empty_assessed_stage": "Resolved by full refresh; root cause not established."
+  },
+  "manual_validation": {
+    "run_id": "manual_5ac8591deaee4c87ad21ca2d16dc38f1",
+    "recorded_at": "2026-10-29T17:20:52.120693+00:00",
+    "publication_gate": "PASSED",
+    "blocking_results_passed": 23
+  },
+  "first_complete_job": {
+    "date": "2026-10-29",
+    "evidence_type": "user_provided_Databricks_Job_Runs_screenshot",
+    "job_name": "applebees-phase2-daily-dev",
+    "job_id": "54448068766203",
+    "run_id": "469997930036472",
+    "status": "SUCCEEDED",
+    "duration_display": "19m 34s",
+    "duration_seconds": 1174,
+    "task_status": {
+      "prepare_sources": "SUCCEEDED",
+      "refresh_pipeline": "SUCCEEDED",
+      "validate_outputs": "SUCCEEDED"
+    },
+    "trigger": "Manually",
+    "individual_task_durations": "NOT_CAPTURED",
+    "job_audit_export": "PASSED_28_OF_28",
+    "second_complete_job_run": "PENDING",
+    "same_source_consistency_for_this_job_run": "PASSED_AGAINST_PRIOR_MANUAL_RUN",
+    "pipeline_update_id": "NOT_CAPTURED",
+    "recorded_at": "2026-10-29T17:58:16.861526+00:00",
+    "source_fingerprint": "2142846:3507863786310667794794",
+    "output_fingerprint": "2142846:-2753200972392633748389"
+  },
+  "same_input_repeatability": "PASSED: first complete job matches the earlier accepted manual run",
+  "second_complete_job_run": "PENDING_USER_EVIDENCE",
+  "remaining_evidence": [
+    "Second complete job run ID, duration and audit",
+    "Individual task durations and pipeline update ID",
+    "Gold operational query export and observed clustering properties"
+  ],
+  "not_claimed": [
+    "Measured performance improvement from clustering",
+    "End-to-end incremental ingestion",
+    "Accounting reconciliation to POS/ledger",
+    "Detected fraud or model accuracy"
+  ]
+}

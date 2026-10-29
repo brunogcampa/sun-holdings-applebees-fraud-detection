@@ -27,7 +27,11 @@
 - `local_validation.json`: local check results and explicit runtime limitations.
 - `test_jsonl_preparation.py`: bounded/lossless conversion, cache validation and failure-recovery tests.
 - `jsonl_conversion_validation.json`: every record of the largest source file compared locally with JSONL output; not a Spark run.
-- `runtime_troubleshooting.json`: observed dry-run success, first-update memory failure and pending runtime verification of the fix.
+- `runtime_troubleshooting.json`: failure history, verified recovery and remaining evidence.
+- `runtime_evidence.json`: verified preparation, publication and first complete job, with remaining evidence identified.
+- `runtime_manual_validation.csv`, `runtime_job_1_validation.csv`: exported aggregate validator audits.
+- `diagnose_pipeline.sql`: read-only stage counts for detecting incomplete populations.
+- `job_run_audit.sql`: validator query for the first complete job run; change the run ID to inspect another run.
 
 Historical Week 4 documents, notebooks and aggregate reports have `historical_`
 prefixes. `migration_map.json` maps their original paths. They are not pipeline

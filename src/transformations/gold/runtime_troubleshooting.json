@@ -7,7 +7,9 @@
   "root_cause": "Photon SimdJsonReader out of memory while scanning large source JSON arrays",
   "dependent_flows": "SKIPPED due to upstream failure",
   "resolution_implemented": "Separate bounded-memory, hash-verified JSONL preparation task; pipeline reads the explicit prepared inventory",
-  "databricks_execution_after_fix": "PENDING",
-  "successful_pipeline_update": false,
-  "same_source_runtime_rerun": "PENDING"
+  "databricks_execution_after_fix": "PASSED_PREPARATION_FULL_REFRESH_AND_COMPLETE_JOB",
+  "successful_pipeline_update": true,
+  "same_source_runtime_rerun": "PASSED_JOB_1_AGAINST_MANUAL_RUN",
+  "intermediate_empty_assessed_output": "Detected by SQL diagnostic; full refresh restored the population. Cause unconfirmed.",
+  "second_complete_job_run": "PENDING_USER_EVIDENCE"
 }

@@ -10,6 +10,7 @@ resources:
         pause_status: PAUSED
       tasks:
         - task_key: prepare_sources
+          disable_auto_optimization: true
           notebook_task:
             notebook_path: ../../src/transformations/silver/prepare_checks_jsonl.ipynb
             base_parameters:
@@ -28,6 +29,7 @@ resources:
           min_retry_interval_millis: 60000
           timeout_seconds: 7200
         - task_key: validate_outputs
+          disable_auto_optimization: true
           depends_on:
             - task_key: refresh_pipeline
           run_if: ALL_SUCCESS

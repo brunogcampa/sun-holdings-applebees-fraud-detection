@@ -3,13 +3,28 @@
 **Business objective:** produce trustworthy check, payment and discount tables so
 operations can prioritize unusual activity for review. An anomaly is not proof of fraud.
 
-**Current evidence:** an independent audit reread all **115 JSON files**, totaling
-**2,142,846 checks, 127 locations and 115 days**, April 28 through August 20, 2026.
-It reproduced **268,590 discounted checks**, **3,856 empty payment lists** and the
-original tip-sign counts. A user-supplied screenshot confirms a successful dry run.
-The first data-processing update **failed in Photon JSON scanning with an out-of-memory error**.
-A bounded JSONL preparation task is now implemented and locally tested; its Databricks
-run and a successful pipeline update remain pending. Local tests are not a successful Spark run.
+**Verified execution on October 29, 2026:** the pipeline published all
+**2,142,846 checks** from **115 original files**, covering **127 locations and 115 days**.
+The manual publication gate passed. The complete three-task job then succeeded in
+**19 min 34 s**, with **28 passing audit results**, including the comparison with
+the prior accepted manual run. Source and published-check fingerprints match.
+The second complete job run is awaiting evidence.
+
+| Runtime observation | Verified result |
+|---|---|
+| Job / first complete run | `54448068766203` / `469997930036472` |
+| Source = assessed = published checks | 2,142,846 each |
+| Quarantined, out-of-scope, corrupt checks and missing dates | 0 |
+| Discounted checks | 268,590 |
+| Ticket / item discount events | 240,699 / 275,991 |
+| Payment events | 2,232,092 |
+| Empty payment lists retained | 3,856 |
+| First complete job duration | 19 min 34 s, observed from the Runs screenshot |
+
+Evidence: [runtime_evidence.json](src/transformations/gold/runtime_evidence.json),
+[job audit](src/transformations/gold/runtime_job_1_validation.csv) and
+[manual audit](src/transformations/gold/runtime_manual_validation.csv).
+These aggregate audit exports contain no individual check or employee records.
 
 ## Exact repository hierarchy
 
@@ -97,6 +112,8 @@ flowchart LR
 The job has three sequential tasks: **prepare_sources**, **refresh_pipeline**,
 then **validate_outputs**, each dependent on the previous task succeeding. Lakeflow resolves the internal Silver/Gold graph.
 Concurrency is one. The proposed schedule is 07:00 America/Mexico_City, **PAUSED**.
+The observed workspace job uses manual triggering. The daily schedule in YAML is
+a paused deployment proposal, rather than an active workspace trigger.
 No email or external notification is sent by this configuration.
 
 - Preparation reads bounded chunks, preserves JSON value tokens and writes shards targeting 16 MiB.
@@ -109,6 +126,8 @@ No email or external notification is sent by this configuration.
 - Empty payment lists remain operational exceptions, not presumed unpaid sales.
 - The pipeline task has one retry after 60 seconds for transient failures.
   The validator has no automatic retry because data failures require investigation.
+  Serverless auto-optimization is explicitly disabled for notebook tasks to honor
+  those retry bounds. This is separate from the job performance-optimized mode.
 - After fixing the source or code, rerun the failed task or the job. Pipeline
   refreshes recompute the result rather than append another copy of all checks.
 - Per-table refresh atomicity does not imply all tables publish as one transaction.
@@ -172,15 +191,17 @@ The current aggregate audit is [source_audit.json](src/transformations/gold/sour
 | Three checks have positive aggregate tip values | Sign convention exceptions deserve targeted review | Use date + location + check ID + payment actor and source file in private evidence |
 | Ticket/item discount events: 240,699 / 275,991 | Event counts are different from unique discounted checks | Keep levels separate and validate monetary overlap before summing |
 
-Historical findings are independently reproduced from source. Refresh the figures
-from accepted Gold outputs before claiming them as results of the new pipeline.
+The runtime validator now reproduces the coverage, discounted-check and event
+counts from accepted Gold/Silver. Specific location concentrations and tip-sign
+breakdowns retain their historical EDA/source origin until the corresponding Gold
+query exports are captured.
 No model accuracy, reduction in losses or detected-fraud count is claimed.
 
 ## Submission
 
 - [Rubric-to-evidence checklist](src/transformations/gold/RUBRIC_EVIDENCE.md)
 - [Five-minute English presentation script](src/transformations/gold/PRESENTATION_SCRIPT_EN.md)
-- [English slide deck](src/transformations/gold/Applebees_Phase2_EN.pptx): eight main slides and two question appendices. Execution status remains explicitly pending.
+- [English slide deck](src/transformations/gold/Applebees_Phase2_EN.pptx): eight main slides and two question appendices, updated with verified job evidence.
 - [Demonstration SQL](src/transformations/gold/demo_queries.sql)
 - [Deployment/run instructions](src/transformations/gold/RUNBOOK_ES.md)
 
@@ -192,9 +213,16 @@ No model accuracy, reduction in losses or detected-fraud count is claimed.
 - [Job and serverless bundle examples](https://docs.databricks.com/aws/en/dev-tools/bundles/examples)
 - [JSON Lines and multiline JSON reading](https://docs.databricks.com/aws/en/query/formats/json)
 
-Runtime progress: dry run passed; first data update failed in the JSON scan. The
-JSONL fix is implemented, but successful updates, observed expectations, clustering
-performance and same-source rerun evidence remain pending in Databricks.
+Runtime history: the first attempt exhausted Photon memory while scanning large
+JSON arrays. Bounded JSONL preparation resolved the scan issue. A subsequent
+completed update had an empty assessed table. The SQL diagnostic detected the
+population gap, and a full refresh restored all 2,142,846 records. The cause of
+that intermediate empty state is not established. The complete job and its
+unchanged-source comparison subsequently passed.
+
+Remaining evidence includes the second complete job run, individual task timings,
+the pipeline update ID and observed clustering properties. No performance uplift,
+cost saving, accounting accuracy or fraud-detection accuracy is claimed.
 
 ## Databricks Git folder compatibility
 

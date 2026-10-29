@@ -70,6 +70,7 @@ class RepositoryContracts(unittest.TestCase):
         self.assertIn('depends_on:\n            - task_key: refresh_pipeline',cfg)
         self.assertIn('max_concurrent_runs: 1',cfg)
         self.assertIn('max_retries: 0',cfg)
+        self.assertEqual(cfg.count('disable_auto_optimization: true'),2)
     def test_gold_dependencies_exist(self):
         silver=(ROOT/'src/transformations/silver/mv_checks_cleaned.py').read_text()
         names=set(re.findall(r'name="(silver_\w+)"',silver))
