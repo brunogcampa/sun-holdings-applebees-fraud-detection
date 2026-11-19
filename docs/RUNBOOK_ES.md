@@ -7,14 +7,15 @@ El job `applebees-phase2-daily-dev` (ID `54448068766203`) completó dos corridas
 Las 28 filas de auditoría pasaron en cada una. Las huellas de entrada y de tickets
 publicados coinciden. Las tres tareas usan la copia `applebees-phase2-code-v2`.
 La consulta final Gold también quedó ejecutada y exportada. Consulta
-`runtime_evidence.json`, las dos auditorías CSV y `BUSINESS_FINDINGS.md`.
+`evidence/runtime_evidence.json`, las dos auditorías CSV de `evidence/` y `docs/BUSINESS_FINDINGS.md`.
 
 ## 1. Conectar o actualizar el repositorio en Databricks
 
 En Workspace, crea una carpeta Git con el repositorio
 `https://github.com/brunogcampa/sun-holdings-applebees-fraud-detection` y selecciona
-`main`. Si ya existe, actualízala mediante Pull. El repositorio es privado: usa tu
-conexión autorizada de GitHub en Databricks. No pegues contraseñas o tokens en el código.
+`main`. Si ya existe, actualízala mediante Pull. El repositorio es público, así que
+clonarlo no requiere credenciales; para hacer push desde Databricks sí necesitas tu
+conexión autorizada de GitHub. No pegues contraseñas o tokens en el código.
 Si la conexión pide permisos nuevos, revísalos y complétala personalmente.
 
 Si prefieres trabajar sin conexión Git, importa **individualmente** los tres
@@ -91,7 +92,7 @@ Inicia una actualización normal y espera su terminación. Guarda una captura de
 grafo completo y el identificador de la actualización. Comprueba la pestaña de
 calidad/expectations. Un error del pipeline todavía no es una ejecución exitosa.
 
-Ejecuta las primeras consultas de `demo_queries.sql`, sustituyendo el esquema si
+Ejecuta las primeras consultas de `src/queries/demo_queries.sql`, sustituyendo el esquema si
 cambiaste el destino. Esperamos 2,142,846 checks, 127 locations, 115 días,
 268,590 checks descontados, 240,699 eventos de ticket y 275,991 de producto.
 Investiga cualquier diferencia: no fuerces las cifras modificando datos.
@@ -102,7 +103,7 @@ los resultados. **Run pipeline with full table refresh**, con todas las tablas,
 restauró la población completa. La causa de ese estado intermedio no quedó
 establecida. Una actualización normal posterior, dentro del job, pasó el gate.
 
-Usa `diagnose_pipeline.sql` para verificar que leídos = evaluados = publicados,
+Usa `src/queries/diagnose_pipeline.sql` para verificar que leídos = evaluados = publicados,
 cuarentena = fuera de período = fechas faltantes = 0, y archivos originales = 115.
 
 ## 6. Ejecutar el validador
@@ -160,7 +161,7 @@ capturas deben ocultar datos personales y conservar contexto técnico suficiente
 ## 9. Ensayar cinco minutos en inglés
 
 Usa las ocho diapositivas principales y el guion. El apéndice sirve para preguntas.
-Las evidencias técnicas actualizadas están en `runtime_evidence.json` y los CSV
+Las evidencias técnicas actualizadas están en `evidence/runtime_evidence.json` y los CSV
 de ambos jobs y de Gold. Los archivos de presentación se conservan como estaban.
 Para describir el estado actual, utiliza los IDs, las duraciones y los resultados
 de esta documentación y de `BUSINESS_FINDINGS.md`.

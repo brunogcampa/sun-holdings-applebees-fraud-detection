@@ -5,3 +5,12 @@
 .databricks/
 __pycache__/
 *.zip
+
+# Source data and private evidence must stay in the Databricks volume, never in Git.
+facts/
+dimensions/
+*.jsonl
+*.parquet
+*_privado*
+*_private*
+.ipynb_checkpoints/

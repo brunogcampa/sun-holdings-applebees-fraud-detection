@@ -13,4 +13,4 @@
 | pagos_por_canal.csv | Canal; importes positivos y negativos separados, sin definición contable de ingreso neto |
 | catalogo_descuentos.csv | 106 IDs; interpretación por nombre, no catálogo oficial |
 
-No contienen detalles por ticket ni identificadores de empleados. Las cifras corresponden al período 28 de abril–20 de agosto de 2026. Los CSV originales completos y evidencia individual se conservan fuera del repositorio. No mezclar fracciones 0–1 y porcentajes 0–100 en visualizaciones. Ver [metodología](historical_docs_metodologia.md).
+No contienen detalles por ticket ni identificadores de empleados. Las cifras corresponden al período 28 de abril–20 de agosto de 2026. Los CSV originales completos y evidencia individual se conservan fuera del repositorio. No mezclar fracciones 0–1 y porcentajes 0–100 en visualizaciones. Ver [metodología](../../docs/metodologia.md).

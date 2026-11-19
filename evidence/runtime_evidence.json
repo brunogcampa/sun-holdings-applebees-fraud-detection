@@ -116,8 +116,9 @@
     "Exported final workspace Job configuration"
   ],
   "delivery_access": {
-    "repository_visibility": "PRIVATE",
-    "evaluator_account_access": "NOT_VERIFIED"
+    "repository_visibility": "PUBLIC",
+    "visibility_checked_on": "2026-11-19",
+    "evaluator_account_access": "NOT_REQUIRED_PUBLIC_REPOSITORY"
   },
   "gold_analysis": {
     "query": "final_gold_evidence.sql",

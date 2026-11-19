@@ -6,7 +6,9 @@ import re
 import unittest
 from pathlib import Path
 HERE=Path(__file__).resolve().parent
-ROOT=HERE.parents[2]
+ROOT=HERE.parent
+GOLD=ROOT/'src/transformations/gold'
+SILVER=ROOT/'src/transformations/silver'
 spec=importlib.util.spec_from_file_location('audit',HERE/'verify_sources.py')
 audit=importlib.util.module_from_spec(spec)
 spec.loader.exec_module(audit)
@@ -48,11 +50,36 @@ class QualityContracts(unittest.TestCase):
 class RepositoryContracts(unittest.TestCase):
     def test_text_blob_line_endings_are_lf(self):
         for path in ROOT.rglob('*'):
+            if '.git' in path.relative_to(ROOT).parts:
+                continue
             if path.is_file() and (path.suffix.lower() in {'.md','.yml','.py','.sql','.ipynb','.json','.csv'} or path.name in {'.gitignore','.gitattributes'}):
                 self.assertNotIn(b'\r\n',path.read_bytes(),str(path))
     def test_exact_directory_hierarchy(self):
-        actual={p.relative_to(ROOT).as_posix() for p in ROOT.rglob('*') if p.is_dir() and '__pycache__' not in p.parts}
-        self.assertEqual(actual,{'resources','resources/jobs','resources/pipelines','src','src/transformations','src/transformations/silver','src/transformations/gold'})
+        actual={p.relative_to(ROOT).as_posix() for p in ROOT.rglob('*') if p.is_dir() and not {'__pycache__','.git'} & set(p.relative_to(ROOT).parts)}
+        self.assertEqual(actual,{
+            'resources','resources/jobs','resources/pipelines',
+            'src','src/transformations','src/transformations/silver','src/transformations/gold','src/queries',
+            'tests','docs','evidence','presentation','presentation/phase2',
+            'archive','archive/phase1_eda','archive/phase1_eda/config','archive/phase1_eda/dashboards',
+            'archive/phase1_eda/docs','archive/phase1_eda/docs/presentacion','archive/phase1_eda/docs/presentacion/assets',
+            'archive/phase1_eda/notebooks','archive/phase1_eda/notebooks/import','archive/phase1_eda/reports',
+            'archive/phase1_eda/reports/week4','archive/phase1_eda/src','archive/phase1_eda/src/transformations',
+            'archive/phase1_eda/src/transformations/gold','archive/phase1_eda/src/transformations/gold/queries',
+            'archive/phase1_eda/tests'})
+    def test_runtime_files_keep_databricks_paths(self):
+        # The live Databricks job and pipeline reference these paths; moving them breaks the workspace job.
+        for rel in ['src/transformations/silver/prepare_checks_jsonl.ipynb','src/transformations/silver/mv_checks_cleaned.py',
+                    'src/transformations/gold/mv_executive_kpis.sql','src/transformations/gold/mv_quality_metrics.sql',
+                    'src/transformations/gold/validate_pipeline.ipynb']:
+            self.assertTrue((ROOT/rel).is_file(),rel)
+    def test_markdown_links_resolve(self):
+        for md in ROOT.rglob('*.md'):
+            if '.git' in md.relative_to(ROOT).parts:
+                continue
+            for target in re.findall(r'\]\(([^)\s#]+)',md.read_text(encoding='utf-8')):
+                if re.match(r'^[a-z]+:',target):
+                    continue
+                self.assertTrue((md.parent/target).exists(),f'{md.relative_to(ROOT)} -> {target}')
     def test_python_syntax(self):
         for p in ROOT.rglob('*.py'):
             ast.parse(p.read_text(encoding='utf-8'))
@@ -74,11 +101,13 @@ class RepositoryContracts(unittest.TestCase):
     def test_gold_dependencies_exist(self):
         silver=(ROOT/'src/transformations/silver/mv_checks_cleaned.py').read_text()
         names=set(re.findall(r'name="(silver_\w+)"',silver))
-        for p in HERE.glob('mv_*.sql'):
+        sql_files=list(GOLD.glob('mv_*.sql'))
+        self.assertEqual(len(sql_files),2)
+        for p in sql_files:
             for dep in re.findall(r'\b(silver_\w+)\b',p.read_text()):
                 self.assertIn(dep,names,(p,dep))
     def test_validation_notebook_has_no_outputs(self):
-        for path in [HERE/'validate_pipeline.ipynb', ROOT/'src/transformations/silver/prepare_checks_jsonl.ipynb']:
+        for path in [GOLD/'validate_pipeline.ipynb', SILVER/'prepare_checks_jsonl.ipynb']:
             nb=json.loads(path.read_text(encoding='utf-8'))
             for c in nb['cells']:
                 if c['cell_type']=='code':

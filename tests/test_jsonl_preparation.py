@@ -6,7 +6,7 @@ import tempfile
 import unittest
 from pathlib import Path
 
-SILVER = Path(__file__).resolve().parent.parent / "silver"
+SILVER = Path(__file__).resolve().parent.parent / "src" / "transformations" / "silver"
 spec = importlib.util.spec_from_file_location("prepare", SILVER / "prepare_checks_jsonl_source.py")
 prepare = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(prepare)
