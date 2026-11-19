@@ -59,9 +59,9 @@ class RepositoryContracts(unittest.TestCase):
         self.assertEqual(actual,{
             'resources','resources/jobs','resources/pipelines',
             'src','src/transformations','src/transformations/silver','src/transformations/gold','src/queries',
-            'tests','docs','evidence','presentation','presentation/phase2',
+            'tests','docs','evidence',
             'archive','archive/phase1_eda','archive/phase1_eda/config','archive/phase1_eda/dashboards',
-            'archive/phase1_eda/docs','archive/phase1_eda/docs/presentacion','archive/phase1_eda/docs/presentacion/assets',
+            'archive/phase1_eda/docs',
             'archive/phase1_eda/notebooks','archive/phase1_eda/notebooks/import','archive/phase1_eda/reports',
             'archive/phase1_eda/reports/week4','archive/phase1_eda/src','archive/phase1_eda/src/transformations',
             'archive/phase1_eda/src/transformations/gold','archive/phase1_eda/src/transformations/gold/queries',

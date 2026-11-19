@@ -11,7 +11,7 @@ Databricks executions, exported CSVs and screenshots. Local tests remain separat
 | Engineering practices | Bounded JSONL preparation, batch materialized views, date/location clustering and expectations | 27 datasets refreshed, original file lineage retained and unchanged-source fingerprints preserved | Clustering is configured in code. Query profiles and measured speed/cost gains are not claimed |
 | Data quality | Missing/type/key/reference rules, quarantine, timestamp/payment monitoring and audit gate | Zero duplicate keys, corrupt records, quarantine and missing dates. 3,856 empty payment lists retained | POS/ledger reconciliation is a business follow-up |
 | Analysis and business value | Gold coverage, location comparisons, tip magnitudes and IQR outliers | 268,590 discounted checks. Top 3 locations hold 71.0840% of empty-payment cases. 77,856 high-tip outliers above 17.5 | Concentration and statistical outliers are review signals, with explicit denominators |
-| Communication | README, business findings, source notes, runbook and evidence links | Latest results and both runs are documented | Existing presentation assets remain an earlier snapshot. Runtime evidence is authoritative |
+| Communication | README, business findings, source notes, runbook and evidence links | Latest results and both runs are documented | Runtime evidence in `evidence/` is authoritative |
 
 ## Runtime evidence register
 

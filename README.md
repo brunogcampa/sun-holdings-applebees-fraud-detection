@@ -24,7 +24,7 @@ aggregate evidence only.
 | Streaming, materialized views, liquid clustering & expectations | [Engineering best practices](#engineering-best-practices) |
 | Data quality checks | [Data quality](#data-quality), [quality SQL](src/transformations/gold/mv_quality_metrics.sql), [validation gate](src/transformations/gold/validate_pipeline_source.py), [audit exports](evidence/) |
 | Analysis, insights & business value | [Findings](#analysis-and-business-value), [business findings](docs/BUSINESS_FINDINGS.md), [Gold export](evidence/runtime_gold_evidence.csv) |
-| Technical communication | [Rubric-to-evidence checklist](docs/RUBRIC_EVIDENCE.md), [presentation](presentation/phase2/) |
+| Technical communication | [Rubric-to-evidence checklist](docs/RUBRIC_EVIDENCE.md), [data contract](docs/DATA_CONTRACT.md) |
 
 ## Repository map
 
@@ -52,7 +52,6 @@ sun-holdings-applebees-fraud-detection/
 ├── tests/                         Local tests and independent source audit
 ├── docs/                          Data contract, business findings, rubric evidence, runbook
 ├── evidence/                      Exported runtime audits and source manifests (aggregates only)
-├── presentation/phase2/           Phase 2 deck and speaking script (as presented)
 └── archive/phase1_eda/            Week 4 EDA deliverable, kept for traceability
 ```
 
