@@ -14,3 +14,9 @@ dimensions/
 *_privado*
 *_private*
 .ipynb_checkpoints/
+
+# Presentations and slide material are delivered outside this repository.
+*.pptx
+*.ppt
+*.pdf
+presentation/

@@ -152,19 +152,17 @@ Guarda en Databricks o en la carpeta privada de entrega:
 - Dos ejecuciones exitosas, con sus IDs y duración.
 - Expectativas de calidad, cuarentena y cobertura.
 - Resultados de reconciliación y prueba de repetición del validador.
-- Tablas/gráficas Gold usadas en la presentación y consulta que las genera.
+- Tablas/gráficas Gold y la consulta que las genera (`src/queries/final_gold_evidence.sql`).
 - Configuración de clustering y perfil de consulta si vas a afirmar mejoras de rendimiento.
 
 No publiques datos detallados de tickets, empleados o managers en GitHub. Las
 capturas deben ocultar datos personales y conservar contexto técnico suficiente.
 
-## 9. Ensayar cinco minutos en inglés
+## 9. Resultados de referencia
 
-Usa las ocho diapositivas principales y el guion. El apéndice sirve para preguntas.
 Las evidencias técnicas actualizadas están en `evidence/runtime_evidence.json` y los CSV
-de ambos jobs y de Gold. Los archivos de presentación se conservan como estaban.
-Para describir el estado actual, utiliza los IDs, las duraciones y los resultados
-de esta documentación y de `BUSINESS_FINDINGS.md`.
+de ambos jobs y de Gold. Para describir el estado actual, utiliza los IDs, las
+duraciones y los resultados de esta documentación y de `docs/BUSINESS_FINDINGS.md`.
 
 ## Cómo resolver fallos
 
