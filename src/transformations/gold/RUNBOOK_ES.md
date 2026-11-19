@@ -13,8 +13,9 @@ La consulta final Gold también quedó ejecutada y exportada. Consulta
 
 En Workspace, crea una carpeta Git con el repositorio
 `https://github.com/brunogcampa/sun-holdings-applebees-fraud-detection` y selecciona
-`main`. Si ya existe, actualízala mediante Pull. El repositorio es privado: usa tu
-conexión autorizada de GitHub en Databricks. No pegues contraseñas o tokens en el código.
+`main`. Si ya existe, actualízala mediante Pull. El repositorio es público, así que
+clonarlo no requiere credenciales; para hacer push desde Databricks sí necesitas tu
+conexión autorizada de GitHub. No pegues contraseñas o tokens en el código.
 Si la conexión pide permisos nuevos, revísalos y complétala personalmente.
 
 Si prefieres trabajar sin conexión Git, importa **individualmente** los tres

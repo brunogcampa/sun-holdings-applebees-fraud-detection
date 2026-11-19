@@ -5,7 +5,7 @@ Databricks executions, exported CSVs and screenshots. Local tests remain separat
 
 | Criterion | Implementation | Verified evidence | Limitations or follow-up |
 |---|---|---|---|
-| Repository and documentation | Four required leaf directories, source logic, YAML, runbook, contracts and SQL | Code cloned and executed in Databricks. Local structure and LF checks pass | Repository is private. Evaluator access must be confirmed |
+| Repository and documentation | Four required leaf directories, source logic, YAML, runbook, contracts and SQL | Code cloned and executed in Databricks. Local structure and LF checks pass | Repository is public, so evaluators need no invitation. It holds code, documentation and aggregate evidence only |
 | Job and pipeline design | Success dependencies between preparation, refresh and validation. Bounded retries | Job 54448068766203 succeeded twice, with all three tasks green and 28 audit results passing per run | Runs were manually triggered. YAML daily schedule remains a paused proposal |
 | Transformations and table value | Explicit types, composite keys, reference enrichment and independent child arrays | All 2,142,846 rows preserved. Payment and discount child counts reconcile | Business definitions of source amount signs, currency and actor roles require confirmation |
 | Engineering practices | Bounded JSONL preparation, batch materialized views, date/location clustering and expectations | 27 datasets refreshed, original file lineage retained and unchanged-source fingerprints preserved | Clustering is configured in code. Query profiles and measured speed/cost gains are not claimed |
@@ -58,8 +58,8 @@ and actor records stay private in the volume and Databricks tables.
 
 ## Delivery and optional observability
 
-Core technical acceptance and runtime evidence are complete. Confirm that the
-evaluators can access the private repository before submitting its URL. Keep the
+Core technical acceptance and runtime evidence are complete. The repository is
+public, so the URL can be submitted without granting extra access. Keep the
 current manual-trigger setting unless a real new-data cadence is agreed. The
 paused daily schedule in YAML is a deployment proposal.
 

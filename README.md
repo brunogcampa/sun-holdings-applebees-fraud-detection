@@ -3,6 +3,11 @@
 **Business objective:** produce trustworthy check, payment and discount tables so
 operations can prioritize unusual activity for review. An anomaly is not proof of fraud.
 
+**Project status (November 19, 2026):** Phase 2 (pipeline) is complete and its
+evidence below is unchanged. The final phase (dashboard, risk indicators, audit-priority
+queue and recommendations, due December 7, 2026) is in progress. The repository is
+**public**; it contains code, documentation and aggregate evidence only.
+
 **Verified execution on October 29, 2026:** the pipeline published all
 **2,142,846 checks** from **115 original files**, covering **127 locations and 115 days**.
 The manual publication gate passed. The complete three-task job then succeeded
@@ -192,7 +197,7 @@ The current aggregate audit is [source_audit.json](src/transformations/gold/sour
 |---|---|---|
 | 268,590 checks with discounts, 12.5343% overall | Global weighted rate differs from mean daily rate (12.6161%) and mean location rate (12.5964%) | Compare like-for-like rates and volumes |
 | 3,856 empty payment lists, 0.1800% of checks | Missing payment records require reconciliation; they do not establish an unpaid bill | Review source-system lifecycle and the most concentrated locations |
-| Locations 87, 1 and 141 account for 71.08% of empty-payment cases in Week 4 | Concentration identifies where investigation may have the highest yield | Compare 34.62%, 24.07%, 12.40% case shares with local missing-payment rates |
+| Locations 87, 1 and 141 account for 71.08% of empty-payment cases (Phase 2 Gold export; first seen in Week 4) | Concentration identifies where investigation may have the highest yield. Case shares are 34.62%, 24.07% and 12.40%; local empty-payment rates are 4.56%, 3.42% and 3.61%, against 0.18% overall | Review the source-system lifecycle of these checks at the three locations first |
 | Three checks have positive aggregate tip values | Sign convention exceptions deserve targeted review | Use date + location + check ID + payment actor and source file in private evidence |
 | Ticket/item discount events: 240,699 / 275,991 | Event counts are different from unique discounted checks | Keep levels separate and validate monetary overlap before summing |
 
@@ -232,8 +237,9 @@ Core technical acceptance is complete: two successful whole-job runs, reconciled
 populations, unchanged-input fingerprints and an exported Gold analysis. Additional
 observability, such as per-task timings, pipeline update IDs and clustering query
 profiles, was not captured. No performance uplift, cost saving, accounting accuracy
-or fraud-detection accuracy is claimed. Confirm evaluator access before submitting
-the link because the repository remains private. Raw POS files remain outside GitHub.
+or fraud-detection accuracy is claimed. The repository is public, so evaluators can
+open the link without an invitation. Raw POS files, employee dimensions and
+individual check or actor records remain outside GitHub.
 
 ## Databricks Git folder compatibility
 

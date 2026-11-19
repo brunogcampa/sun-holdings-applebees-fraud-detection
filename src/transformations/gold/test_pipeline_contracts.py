@@ -48,10 +48,12 @@ class QualityContracts(unittest.TestCase):
 class RepositoryContracts(unittest.TestCase):
     def test_text_blob_line_endings_are_lf(self):
         for path in ROOT.rglob('*'):
+            if '.git' in path.relative_to(ROOT).parts:
+                continue
             if path.is_file() and (path.suffix.lower() in {'.md','.yml','.py','.sql','.ipynb','.json','.csv'} or path.name in {'.gitignore','.gitattributes'}):
                 self.assertNotIn(b'\r\n',path.read_bytes(),str(path))
     def test_exact_directory_hierarchy(self):
-        actual={p.relative_to(ROOT).as_posix() for p in ROOT.rglob('*') if p.is_dir() and '__pycache__' not in p.parts}
+        actual={p.relative_to(ROOT).as_posix() for p in ROOT.rglob('*') if p.is_dir() and not {'__pycache__','.git'} & set(p.relative_to(ROOT).parts)}
         self.assertEqual(actual,{'resources','resources/jobs','resources/pipelines','src','src/transformations','src/transformations/silver','src/transformations/gold'})
     def test_python_syntax(self):
         for p in ROOT.rglob('*.py'):
