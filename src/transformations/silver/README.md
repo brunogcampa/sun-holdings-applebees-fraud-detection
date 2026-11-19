@@ -1,19 +1,30 @@
-# Silver: cleaned and standardized source logic
+# Silver: preparation, cleaning and standardization
 
-Active pipeline library: `mv_checks_cleaned.py`.
+## Job task 1, `prepare_sources`
 
-Run `prepare_checks_jsonl.ipynb` as a separate notebook before refreshing the
-pipeline. Its source counterpart is `prepare_checks_jsonl_source.py` (distinct
-base name for Databricks Git compatibility). It streams original arrays into
-bounded JSONL shards, preserves business tokens and lineage, and verifies SHA256
-caches. The job automates this as its first task. Do not include preparation
-or historical notebooks in the pipeline library list.
+- [`prepare_checks_jsonl.ipynb`](prepare_checks_jsonl.ipynb) streams each original JSON
+  array into bounded JSON Lines shards (~16 MiB). It preserves business tokens and adds
+  `_source_file` lineage. SHA256 manifests let unchanged sources be reused, and the
+  active inventory is published last.
+- [`prepare_checks_jsonl_source.py`](prepare_checks_jsonl_source.py) holds the same logic as
+  an importable module, tested by [`tests/test_jsonl_preparation.py`](../../../tests/test_jsonl_preparation.py).
 
-It declares nine datasets: source checks, location/channel references, assessed
-checks, accepted checks, quarantine, valid out-of-scope checks, discount events
-and payments. Dataset definitions return DataFrames without write/collect actions.
-The parent pipeline and task orchestration live under `resources/`.
+## Pipeline library
 
-Files beginning with `historical_` retain the Week 4 setup/source helpers. They
-are excluded from the Lakeflow library list. Current execution instructions are
-in the repository root and Gold runbook.
+[`mv_checks_cleaned.py`](mv_checks_cleaned.py) declares nine materialized views:
+
+- source checks;
+- location and channel references;
+- assessed checks;
+- accepted checks (liquid clustered by `business_date`, `LocationId`);
+- quarantine;
+- valid out-of-scope checks;
+- discount events;
+- payments.
+
+Expectations warn on diagnostic rules and fail on reference uniqueness and on the
+validity of published checks. Dataset definitions return DataFrames without
+write or collect actions.
+
+These files stay in this folder because the live Databricks job and pipeline
+reference these exact paths.

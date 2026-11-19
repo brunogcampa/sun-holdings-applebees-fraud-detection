@@ -73,9 +73,9 @@ ledger accuracy, causal effects of discounts on tips or a model's predictive per
 
 ## Traceability
 
-- Query: [final_gold_evidence.sql](final_gold_evidence.sql)
-- Gold export: [runtime_gold_evidence.csv](runtime_gold_evidence.csv)
-- First job audit: [runtime_job_1_validation.csv](runtime_job_1_validation.csv)
-- Second job audit: [runtime_job_2_validation.csv](runtime_job_2_validation.csv)
+- Query: [final_gold_evidence.sql](../src/queries/final_gold_evidence.sql)
+- Gold export: [runtime_gold_evidence.csv](../evidence/runtime_gold_evidence.csv)
+- First job audit: [runtime_job_1_validation.csv](../evidence/runtime_job_1_validation.csv)
+- Second job audit: [runtime_job_2_validation.csv](../evidence/runtime_job_2_validation.csv)
 - Scope and handling rules: [DATA_CONTRACT.md](DATA_CONTRACT.md)
-- Runtime IDs, fingerprints and observed durations: [runtime_evidence.json](runtime_evidence.json)
+- Runtime IDs, fingerprints and observed durations: [runtime_evidence.json](../evidence/runtime_evidence.json)

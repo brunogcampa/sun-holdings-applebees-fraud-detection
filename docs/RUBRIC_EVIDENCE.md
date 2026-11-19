@@ -5,7 +5,7 @@ Databricks executions, exported CSVs and screenshots. Local tests remain separat
 
 | Criterion | Implementation | Verified evidence | Limitations or follow-up |
 |---|---|---|---|
-| Repository and documentation | Four required leaf directories, source logic, YAML, runbook, contracts and SQL | Code cloned and executed in Databricks. Local structure and LF checks pass | Repository is public, so evaluators need no invitation. It holds code, documentation and aggregate evidence only |
+| Repository and documentation | Deployable code in `resources/` and `src/transformations/silver/` and `gold/`; supporting `docs/`, `evidence/`, `tests/`, `src/queries/`; evaluator guide in the root README | Code cloned and executed in Databricks. Local structure and LF checks pass | Repository is public, so evaluators need no invitation. It holds code, documentation and aggregate evidence only |
 | Job and pipeline design | Success dependencies between preparation, refresh and validation. Bounded retries | Job 54448068766203 succeeded twice, with all three tasks green and 28 audit results passing per run | Runs were manually triggered. YAML daily schedule remains a paused proposal |
 | Transformations and table value | Explicit types, composite keys, reference enrichment and independent child arrays | All 2,142,846 rows preserved. Payment and discount child counts reconcile | Business definitions of source amount signs, currency and actor roles require confirmation |
 | Engineering practices | Bounded JSONL preparation, batch materialized views, date/location clustering and expectations | 27 datasets refreshed, original file lineage retained and unchanged-source fingerprints preserved | Clustering is configured in code. Query profiles and measured speed/cost gains are not claimed |
@@ -29,9 +29,9 @@ Databricks executions, exported CSVs and screenshots. Local tests remain separat
 
 | Run | Identifier | Observed duration | Audit |
 |---|---|---|---|
-| Prior manual gate | `manual_5ac8591deaee4c87ad21ca2d16dc38f1` | Not captured | [Manual validation](runtime_manual_validation.csv) |
-| Complete job 1 | `469997930036472` | 19m 34s | [28 passed results](runtime_job_1_validation.csv) |
-| Complete job 2 | `904398544867578` | 21m 23s | [28 passed results](runtime_job_2_validation.csv) |
+| Prior manual gate | `manual_5ac8591deaee4c87ad21ca2d16dc38f1` | Not captured | [Manual validation](../evidence/runtime_manual_validation.csv) |
+| Complete job 1 | `469997930036472` | 19m 34s | [28 passed results](../evidence/runtime_job_1_validation.csv) |
+| Complete job 2 | `904398544867578` | 21m 23s | [28 passed results](../evidence/runtime_job_2_validation.csv) |
 
 - Job ID: `54448068766203`.
 - Source fingerprint in all accepted runs: `2142846:3507863786310667794794`.
@@ -41,13 +41,13 @@ Databricks executions, exported CSVs and screenshots. Local tests remain separat
 - Payment events: 2,232,092. Discount events: 240,699 ticket and 275,991 item.
 - Signed payment/tip sums reconcile within the declared 0.01 aggregation tolerance.
 - Empty-payment monitor: 3,856. Timestamp issues: 0.
-- Twenty-four local tests cover fixtures, bounded preparation and repository contracts.
+- Twenty-six local tests cover fixtures, bounded preparation, repository contracts, runtime paths and Markdown links.
 
 ## Supporting files and interpretation
 
-- [Runtime summary](runtime_evidence.json)
-- [Final Gold query](final_gold_evidence.sql)
-- [Gold export](runtime_gold_evidence.csv)
+- [Runtime summary](../evidence/runtime_evidence.json)
+- [Final Gold query](../src/queries/final_gold_evidence.sql)
+- [Gold export](../evidence/runtime_gold_evidence.csv)
 - [Business findings and recommendations](BUSINESS_FINDINGS.md)
 - [Data contract](DATA_CONTRACT.md)
 

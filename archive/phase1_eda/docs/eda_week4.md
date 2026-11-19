@@ -8,7 +8,7 @@ Priorizar la revisión de descuentos y propinas que requieren explicación opera
 
 ## Cobertura y calidad
 
-2,142,846 tickets, 127 sucursales, 115 días (2026-04-28 a 2026-08-20). Los controles globales de claves, fechas y referencias de sucursal/canal no detectaron duplicados ni huérfanos. [Calidad y límites](historical_docs_data_quality.md).
+2,142,846 tickets, 127 sucursales, 115 días (2026-04-28 a 2026-08-20). Los controles globales de claves, fechas y referencias de sucursal/canal no detectaron duplicados ni huérfanos. [Calidad y límites](data_quality.md).
 
 ## Descuentos y evolución
 
@@ -27,11 +27,11 @@ El descuento promedio por evento es aproximadamente 8.11 a nivel ticket y 3.88 a
 | WALKOUT | 27,306 | 9.89% |
 | TEMP | 20,853 | 7.56% |
 
-La sucursal 174 aparece en el top 5 de cuatro de estas seis categorías; las sucursales 155 y 168 aparecen en tres. Para TASTE, la sucursal 155 realiza 3.23% de los eventos de esa categoría. Para GST CORECT, la sucursal 174 realiza 4.40%. No son porcentajes sobre tickets de la sucursal. Confirmar catálogo y causas antes de concluir incumplimiento. [Tabla completa y fórmulas](historical_reports_week4_README.md).
+La sucursal 174 aparece en el top 5 de cuatro de estas seis categorías; las sucursales 155 y 168 aparecen en tres. Para TASTE, la sucursal 155 realiza 3.23% de los eventos de esa categoría. Para GST CORECT, la sucursal 174 realiza 4.40%. No son porcentajes sobre tickets de la sucursal. Confirmar catálogo y causas antes de concluir incumplimiento. [Tabla completa y fórmulas](../reports/week4/README.md).
 
 ## Propinas
 
-1,029,262 tickets con propina agregada negativa, 1,113,581 con cero y 3 con positiva. El signo negativo es habitual en este dataset. La comparación con registros de pago muestra medias originales de −4.2691 sin descuento y −3.1548 con descuento. La asociación no prueba causalidad y puede reflejar canales o tipos de operación diferentes. La media de magnitud sobre todo el universo es 4.122923 y la mediana 0. [Transformaciones y outliers](historical_docs_metodologia.md).
+1,029,262 tickets con propina agregada negativa, 1,113,581 con cero y 3 con positiva. El signo negativo es habitual en este dataset. La comparación con registros de pago muestra medias originales de −4.2691 sin descuento y −3.1548 con descuento. La asociación no prueba causalidad y puede reflejar canales o tipos de operación diferentes. La media de magnitud sobre todo el universo es 4.122923 y la mediana 0. [Transformaciones y outliers](metodologia.md).
 
 ## Tickets sin registros de pago
 

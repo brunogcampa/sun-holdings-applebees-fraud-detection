@@ -1,110 +1,111 @@
-# Applebee's: Phase 2 pipeline deliverable
+# Sun Holdings × Applebee's: discount and tip pattern pipeline
 
-**Business objective:** produce trustworthy check, payment and discount tables so
-operations can prioritize unusual activity for review. An anomaly is not proof of fraud.
+A Databricks Lakeflow pipeline that turns 115 days of Applebee's (RMH franchisee) POS
+check files into validated Silver and Gold tables. The business can then see where
+discount, tip and payment patterns deserve review.
 
-**Project status (November 19, 2026):** Phase 2 (pipeline) is complete and its
-evidence below is unchanged. The final phase (dashboard, risk indicators, audit-priority
-queue and recommendations, due December 7, 2026) is in progress. The repository is
-**public**; it contains code, documentation and aggregate evidence only.
+> **Business question:** How can Sun Holdings identify suspicious discount and tip
+> patterns across multiple locations?
+> **Principle:** an anomaly is a review candidate, not proof of fraud.
 
-**Verified execution on October 29, 2026:** the pipeline published all
-**2,142,846 checks** from **115 original files**, covering **127 locations and 115 days**.
-The manual publication gate passed. The complete three-task job then succeeded
-twice, in **19 min 34 s** and **21 min 23 s**. Both runs passed all **28 audit
-results**, including repeatability. Source and published-check fingerprints match
-across both complete jobs and the prior accepted manual run. The final Gold query
-also confirms the operational findings and the measured tip-outlier threshold.
+**Project status (November 19, 2026):** Phase 2 (pipeline) is complete; its evidence
+below is unchanged and preserved as submitted. The final phase (dashboard, risk
+indicators, audit-priority queue and recommendations, due December 7, 2026) is in
+progress. The repository is **public** and contains code, documentation and
+aggregate evidence only.
 
-| Runtime observation | Verified result |
+## Evaluator quick guide
+
+| Rubric criterion | Where to look |
 |---|---|
-| Job / first complete run | `54448068766203` / `469997930036472` |
-| Source = assessed = published checks | 2,142,846 each |
-| Quarantined, out-of-scope, corrupt checks and missing dates | 0 |
-| Discounted checks | 268,590 |
-| Ticket / item discount events | 240,699 / 275,991 |
-| Payment events | 2,232,092 |
-| Empty payment lists retained | 3,856 |
-| Complete job runs | `469997930036472` and `904398544867578` |
-| Observed job durations | 19 min 34 s and 21 min 23 s |
-| Gold tip outliers | 77,856 checks above magnitude 17.5, using the available-tip population |
+| GitHub repository & documentation | This README, the [repository map](#repository-map), [runbook](docs/RUNBOOK_ES.md) |
+| Job & pipeline design | [Job design](#job-design-orchestration-failures-and-reruns), [job YAML](resources/jobs/daily_orchestration_job.yml), [pipeline YAML](resources/pipelines/lakeflow_pipeline.yml) |
+| Transformations & table value | [Architecture](#architecture-and-data-flow), [Silver code](src/transformations/silver/mv_checks_cleaned.py), [Gold code](src/transformations/gold/mv_executive_kpis.sql), [data contract](docs/DATA_CONTRACT.md) |
+| Streaming, materialized views, liquid clustering & expectations | [Engineering best practices](#engineering-best-practices) |
+| Data quality checks | [Data quality](#data-quality), [quality SQL](src/transformations/gold/mv_quality_metrics.sql), [validation gate](src/transformations/gold/validate_pipeline_source.py), [audit exports](evidence/) |
+| Analysis, insights & business value | [Findings](#analysis-and-business-value), [business findings](docs/BUSINESS_FINDINGS.md), [Gold export](evidence/runtime_gold_evidence.csv) |
+| Technical communication | [Rubric-to-evidence checklist](docs/RUBRIC_EVIDENCE.md), [presentation](presentation/phase2/) |
 
-Evidence: [runtime_evidence.json](src/transformations/gold/runtime_evidence.json),
-[first job audit](src/transformations/gold/runtime_job_1_validation.csv),
-[second job audit](src/transformations/gold/runtime_job_2_validation.csv),
-[manual audit](src/transformations/gold/runtime_manual_validation.csv) and
-[Gold evidence](src/transformations/gold/runtime_gold_evidence.csv).
-These aggregate audit exports contain no individual check or employee records.
-
-## Exact repository hierarchy
+## Repository map
 
 ```text
 sun-holdings-applebees-fraud-detection/
-├── README.md
-├── .gitignore
-├── .gitattributes
-├── databricks.yml
+├── README.md                      Start here
+├── databricks.yml                 Asset Bundle entry point (variables, dev target)
 ├── resources/
 │   ├── jobs/
-│   │   └── daily_orchestration_job.yml
+│   │   └── daily_orchestration_job.yml   3-task job: prepare → refresh → validate
 │   └── pipelines/
-│       └── lakeflow_pipeline.yml
-└── src/
-    └── transformations/
-        ├── silver/
-        │   ├── mv_checks_cleaned.py
-        │   ├── prepare_checks_jsonl.ipynb
-        │   └── prepare_checks_jsonl_source.py
-        └── gold/
-            ├── mv_executive_kpis.sql
-            ├── mv_quality_metrics.sql
-            ├── validate_pipeline.ipynb
-            ├── validate_pipeline_source.py
-            ├── demo_queries.sql
-            ├── RUNBOOK_ES.md
-            ├── DATA_CONTRACT.md
-            ├── RUBRIC_EVIDENCE.md
-            ├── PRESENTATION_SCRIPT_EN.md
-            ├── test_pipeline_contracts.py
-            ├── verify_sources.py
-            ├── source_audit.json
-            └── historical_*                Retained Week 4 documentation and evidence
+│       └── lakeflow_pipeline.yml         Lakeflow pipeline: the 3 library files below
+├── src/
+│   ├── transformations/           Code that runs in Databricks (paths used by the live job)
+│   │   ├── silver/
+│   │   │   ├── prepare_checks_jsonl.ipynb     Job task 1: JSON arrays → bounded JSONL shards
+│   │   │   ├── prepare_checks_jsonl_source.py Same logic as an importable module (tested locally)
+│   │   │   └── mv_checks_cleaned.py           Pipeline library: 9 Silver datasets + expectations
+│   │   └── gold/
+│   │       ├── mv_executive_kpis.sql          Pipeline library: 14 analytical Gold datasets
+│   │       ├── mv_quality_metrics.sql         Pipeline library: 4 Gold quality datasets
+│   │       ├── validate_pipeline.ipynb        Job task 3: post-run publication gate (28 audits)
+│   │       └── validate_pipeline_source.py    Same gate as source code
+│   └── queries/                   Read-only SQL for demos, diagnostics and evidence export
+├── tests/                         Local tests and independent source audit
+├── docs/                          Data contract, business findings, rubric evidence, runbook
+├── evidence/                      Exported runtime audits and source manifests (aggregates only)
+├── presentation/phase2/           Phase 2 deck and speaking script (as presented)
+└── archive/phase1_eda/            Week 4 EDA deliverable, kept for traceability
 ```
 
-Only the four requested leaf directories are used. File names describe checks and
-discounts rather than the illustrative orders/customers in the assignment. Root
-files provide the bundle entry point and navigation. Supporting documentation,
-notebooks and reports are colocated with their processing layer. Historical paths
-are recorded in [migration_map.json](src/transformations/gold/migration_map.json).
-The prior repository remains recoverable in Git history.
+Only `src/transformations/` and `resources/` are deployed to Databricks. Everything
+else supports review, reproducibility and traceability.
 
-## Architecture and grain
+## Business objective
+
+Discount misuse is hard to see in raw POS files. Each daily file is a large nested
+array of checks, with items, discounts and payments at different levels. Joining
+those levels naively multiplies amounts. Reading them naively exhausted memory.
+
+The pipeline produces **trustworthy, reconciled tables** at explicit grains, so that
+operations can compare locations, channels and dates and decide **where to look
+first**. It deliberately reports *review signals* (concentrations, statistical
+outliers, missing records) rather than fraud labels.
+
+## Architecture and data flow
 
 ```mermaid
 flowchart LR
-    A[Original JSON arrays in volume] --> N[Bounded preparation: JSON Lines shards]
+    A["Source: 115 daily JSON arrays<br/>+ reference files (UC volume)"] --> N["Task 1 prepare_sources<br/>bounded JSONL shards + SHA256 manifest"]
     N --> B[silver_checks_raw]
-    L[Location and channel references] --> C[silver_checks_assessed]
+    L["silver_locations<br/>silver_channels"] --> C[silver_checks_assessed]
     B --> C
     C --> D[silver_checks]
     C --> Q[silver_checks_quarantine]
     C --> O[silver_checks_out_of_scope]
     D --> P[silver_payments]
     D --> E[silver_discount_events]
-    D --> G[Gold metrics]
+    D --> G["Gold analytics (14)"]
     P --> G
     E --> G
-    C --> K[Gold quality metrics]
-    G --> V[Post-run validation gate]
+    C --> K["Gold quality (4)"]
+    G --> V["Task 3 validate_outputs<br/>28 audits → pipeline_validation_runs"]
     K --> V
 ```
+
+| Layer | What happens | Why it is needed |
+|---|---|---|
+| **Source / landing** | `prepare_sources` streams each original JSON array into ~16 MiB JSON Lines shards, adds `_source_file` lineage and writes a SHA256 manifest last | Direct reads of the large arrays exhausted Photon memory. Originals stay untouched; cached shards are reused when hashes match |
+| **Silver** | Explicit schemas, `try_cast` dates, composite key `business_date + LocationId + check_id`, reference enrichment, quality reasons, quarantine, and separate payment and discount tables | `Check.Id` is unique only per day and store. Separating child arrays prevents double counting of amounts |
+| **Gold** | Materialized views at explicit grains: coverage, daily/location/channel metrics, tip statistics and outliers, discount catalog, missing payments, actor activity and quality metrics | Precomputes the comparisons the business asks for, with stated denominators |
+| **Validation gate** | Compares source, assessed and published counts, reconciles amounts and child counts, and checks fingerprints against the prior accepted run | The job fails visibly if outputs cannot be trusted |
+
+### Tables and their value
 
 | Dataset | Grain and purpose |
 |---|---|
 | `silver_checks_raw` | One typed source record, with original file path and corruption indicator |
 | `silver_locations`, `silver_channels` | One row per reference ID; missing or duplicate reference IDs fail the update |
 | `silver_checks_assessed` | Every source record, composite-key multiplicity, reference checks, scope and quality reasons |
-| `silver_checks` | One valid in-scope check per business date + location + check ID |
+| `silver_checks` | One valid in-scope check per business date + location + check ID (liquid clustered by date and location) |
 | `silver_checks_quarantine` | Every unusable source row with all applicable reasons; all copies of duplicate keys are retained here |
 | `silver_checks_out_of_scope` | Valid records outside the configured dates, kept separate from quality failures |
 | `silver_payments` | One payment position within a valid check, preserving signed amount, tip and actor ID |
@@ -112,111 +113,154 @@ flowchart LR
 | `gold_coverage`, `gold_daily_metrics`, `gold_location_metrics`, `gold_channel_metrics` | Reconciled populations and discount rates at explicit grains |
 | `gold_tip_distribution`, `gold_tip_statistics`, `gold_tip_comparison` | Sign, magnitude, mean/median and comparison with observed payment data |
 | `gold_discount_catalog`, `gold_discount_location_top5` | Event counts by level/category and top locations within each category |
-| `gold_missing_payment_locations`, `gold_tip_outliers`, `gold_positive_tip_evidence` | Operational exception investigation, with traceability |
+| `gold_missing_payment_locations`, `gold_tip_outliers`, `gold_positive_tip_evidence` | Operational exception investigation, with traceability to source file |
 | `gold_employee_discount_activity`, `gold_manager_discount_activity` | Private activity concentration with explicit denominators; not an employee fraud classification |
 | `gold_data_quality`, `gold_quality_issues`, `gold_duplicate_keys`, `gold_missing_dates` | Completeness, validity, uniqueness and reconciliation evidence |
 | `pipeline_validation_runs` | Validator audit, keyed by job run + metric, outside the pipeline-managed graph |
 
-## Job and recovery
+Formulas, null and sign handling are defined in the [data contract](docs/DATA_CONTRACT.md).
 
-The job has three sequential tasks: **prepare_sources**, **refresh_pipeline**,
-then **validate_outputs**, each dependent on the previous task succeeding. Lakeflow resolves the internal Silver/Gold graph.
-Concurrency is one. The proposed schedule is 07:00 America/Mexico_City, **PAUSED**.
-The observed workspace job uses manual triggering. The daily schedule in YAML is
-a paused deployment proposal, rather than an active workspace trigger.
-No email or external notification is sent by this configuration.
+## Job design: orchestration, failures and reruns
 
-- Preparation reads bounded chunks, preserves JSON value tokens and writes shards targeting 16 MiB.
-  It caches verified content by source SHA256 and publishes an explicit active file inventory last.
-  Old cache files are retained and excluded from the active inventory, preventing duplicate reads.
-  A failed preparation blocks the pipeline task. Concurrent manual preparation/updates are unsupported.
-- A source parsing or reference-dimension failure prevents a successful publication.
-- Invalid checks retain their reasons in quarantine. The validator fails when
-  quarantine is nonempty, making an operator review necessary before acceptance.
-- Empty payment lists remain operational exceptions, not presumed unpaid sales.
-- The pipeline task has one retry after 60 seconds for transient failures.
-  The validator has no automatic retry because data failures require investigation.
-  Serverless auto-optimization is explicitly disabled for notebook tasks to honor
-  those retry bounds. This is separate from the job performance-optimized mode.
-- After fixing the source or code, rerun the failed task or the job. Pipeline
-  refreshes recompute the result rather than append another copy of all checks.
-- Per-table refresh atomicity does not imply all tables publish as one transaction.
-  Consumers must inspect the latest job gate and `run_complete=true` before using
-  current outputs. The audit retains run evidence, not a separate snapshot of every
-  Gold table. A failed gate means current outputs must not be approved for decisions.
-- A second run with unchanged sources compares deterministic fingerprints against
-  the prior accepted run. The first run explicitly records `FIRST_RUN`, not a passed rerun test.
-- Keep schedules paused until the first two runs and their evidence are accepted.
+The job `applebees-phase2-daily-dev` has three sequential tasks, each running only
+if the previous one succeeded (`run_if: ALL_SUCCESS`):
 
-## Quality policy
+| Task | Type | Retries / timeout | Purpose |
+|---|---|---|---|
+| `prepare_sources` | Notebook | 1 retry after 60 s / 2 h | Bounded JSONL preparation with SHA256 cache |
+| `refresh_pipeline` | Lakeflow pipeline (`full_refresh: false`) | 1 retry after 60 s / 2 h | Refresh the 27 Silver and Gold datasets |
+| `validate_outputs` | Notebook | No retry / 30 min | Publication gate; data failures need investigation, not retries |
 
-Explicit schemas standardize source types. `try_cast` validates dates and timestamps.
-Source JSON and the historical EDA tables remain unchanged. Check identifiers such
-as **-1 are preserved** because they occur in the supplied data. Uniqueness uses
-the composite key, not check ID alone.
+- **Triggering:** concurrency is one. The observed workspace job is triggered
+  manually. The YAML contains a daily 07:00 `America/Mexico_City` schedule that is
+  **PAUSED** on purpose: the input is a fixed historical snapshot, so a schedule adds
+  value only once a real new-data cadence is agreed.
+- **Preparation** publishes its active file inventory last, so the pipeline never
+  reads a half-written directory. Old cache files are excluded from the active
+  inventory, preventing duplicate reads. A failed preparation blocks the pipeline task.
+- **Failures:** a source parsing or reference-dimension failure prevents publication.
+  Invalid checks keep their reasons in quarantine, and the validator fails while
+  quarantine is nonempty, forcing an operator review.
+- **Reruns:** after fixing the source or code, rerun the failed task or the whole job.
+  Refreshes recompute results rather than append another copy of all checks. Serverless
+  auto-optimization is disabled for the notebook tasks so the retry bounds above hold.
+- **Consumers** must check the latest gate (`run_complete=true`) before using outputs.
+  Per-table refresh atomicity does not make all tables publish as one transaction.
+- **Repeatability:** a second run with unchanged sources compares deterministic
+  fingerprints with the prior accepted run. The first run records `FIRST_RUN`.
 
-**Quarantine:** invalid date, missing key, unknown location/channel, corrupt source,
-duplicate key, invalid numeric payment/discount field, missing item or discount list.
-**Monitor:** missing/empty payment list and timestamp problems. These observations
-have different business meanings and are reported separately.
+## Data quality
 
-Warn expectations retain records and record quality metrics. Fail expectations
-protect dimension uniqueness and valid published checks. No silent deduplication
-or arbitrary first-row survivor is used. See [data contract](src/transformations/gold/DATA_CONTRACT.md).
-
-## Engineering choices
-
-| Feature | Decision and reason | Evidence needed in Databricks |
+| Dimension | Check | Action |
 |---|---|---|
-| Batch versus streaming | A preparation notebook converts fixed historical JSON arrays into bounded JSONL shards before batch materialized views read them. Streaming adds little value to this static input. Auto Loader/streaming requires a future append-only landing contract and checkpoint strategy. | First update and same-source refresh |
-| Materialized views | Silver and Gold definitions return managed, refreshable datasets. Gold precomputes repeated reporting aggregations. | Graph and update results |
-| Liquid clustering | `silver_checks` configures `business_date` and `LocationId`, matching date/location filters. No manual partitions. | Confirm keys and compare query profiles before claiming speed gains |
-| Expectations | Warn for diagnosis, fail for dimension/publication integrity; quarantine provides inspectable evidence. | Quality tab/event log and quarantine queries |
-| Repeatability | Fixed interval and source manifest, distinct actor/event grains, validator fingerprints and audit MERGE by run ID. | Two successful runs with unchanged source |
-| Incrementality | `full_refresh:false` requests normal refresh, but does not establish end-to-end incremental ingestion. This version may reread/recompute batch input. | Measure actual refresh behavior |
-| Data privacy | Keep original JSON, source ZIP, employee dimensions and individual evidence out of GitHub. Only aggregate historical results are committed. | Review exported evidence before sharing |
+| Completeness | Source = assessed = published counts; every expected date present; missing item or discount lists | Gate fails on mismatch; missing dates reported in `gold_missing_dates` |
+| Uniqueness | Composite-key multiplicity; reference ID uniqueness | Duplicates quarantined (all copies); duplicate reference IDs fail the update |
+| Validity | `try_cast` dates/timestamps; numeric payment and discount fields; corrupt JSON | Quarantine with reasons |
+| Consistency | Unknown location or channel; daily and location totals equal the overall total | Quarantine; gate reconciliation |
+| Accuracy (internal) | Payment and tip amounts reconcile after splitting child arrays (tolerance 0.01) | Gate fails on mismatch |
+| Monitored, not removed | Empty payment lists, timestamp problems | Reported separately; they are operational signals, not invalid records |
 
-## Run and demonstrate
+Expectations: **warn** expectations keep records and record metrics; **fail**
+expectations protect dimension uniqueness and the validity of published checks.
+No silent deduplication or arbitrary first-row survivor is used. Check IDs such as
+**-1 are preserved** because they occur in the supplied data. Negative gratuity is the
+dataset's standard sign convention and is not treated as an anomaly.
 
-Use the [Spanish step-by-step runbook](src/transformations/gold/RUNBOOK_ES.md).
-The pipeline includes exactly **three library files**. Historical notebooks,
-validator, tests and exploratory SELECT files are intentionally excluded.
+**Results (both complete job runs):** 0 duplicate keys, 0 corrupt records, 0
+quarantined rows, 0 missing dates, 28/28 audits passed; payment and tip
+reconciliation differences of 6.63e-06 and 3.65e-07. See the
+[job 1](evidence/runtime_job_1_validation.csv) and [job 2](evidence/runtime_job_2_validation.csv) audits.
 
-CLI alternative, after configuring authentication: `databricks bundle validate -t dev`,
-then `databricks bundle deploy -t dev`. Execution is a separate deliberate step.
-No CLI installation is required for the runbook's web workflow.
+## Engineering best practices
 
-Local checks: `python -B src/transformations/gold/test_pipeline_contracts.py` and
-`python -B src/transformations/gold/test_jsonl_preparation.py`.
-Independent source audit: `python src/transformations/gold/verify_sources.py PATH_TO_DATASET`.
-The current aggregate audit is [source_audit.json](src/transformations/gold/source_audit.json).
+| Feature | Decision and reason | Where |
+|---|---|---|
+| Streaming (evaluated) | Not used in Phase 2: the input is a fixed historical snapshot, so batch materialized views over prepared shards are simpler and fully reproducible. Auto Loader/streaming tables need an append-only landing contract and checkpoints; this is the planned path for incremental ingestion | [pipeline YAML](resources/pipelines/lakeflow_pipeline.yml) (`continuous: false`) |
+| Materialized views | All Silver and Gold datasets are managed, refreshable materialized views; Gold precomputes repeated reporting aggregations | [Silver](src/transformations/silver/mv_checks_cleaned.py), [Gold](src/transformations/gold/mv_executive_kpis.sql) |
+| Liquid clustering | `silver_checks` is clustered by `business_date` and `LocationId`, matching the date and location filters downstream; no manual partitions | `cluster_by` in [mv_checks_cleaned.py](src/transformations/silver/mv_checks_cleaned.py) |
+| Expectations | `expect`, `expect_all` (warn) and `expect_or_fail` (fail), plus a quarantine table for inspectable evidence | [mv_checks_cleaned.py](src/transformations/silver/mv_checks_cleaned.py) |
+| Repeatability | Fixed interval and source manifest, distinct actor/event grains, validator fingerprints and an audit `MERGE` by run ID | [validation gate](src/transformations/gold/validate_pipeline_source.py) |
+| Incrementality | `full_refresh: false` plus the SHA256 preparation cache avoid redundant work, but this is not end-to-end incremental ingestion | [job YAML](resources/jobs/daily_orchestration_job.yml) |
+| Infrastructure as code | Job and pipeline declared in a Databricks Asset Bundle with variables for catalog, schema, source and dates | [databricks.yml](databricks.yml) |
+| Data privacy | Original JSON, source ZIP, employee dimensions and individual evidence stay out of GitHub; `.gitignore` blocks data folders and private files | [.gitignore](.gitignore) |
 
-## Baseline findings and business interpretation
+Clustering is configured in code; no measured speed or cost gain is claimed.
+
+## Analysis and business value
+
+Verified on the accepted Gold population (2,142,846 checks, 127 locations, 115 days,
+April 28 – August 20, 2026):
 
 | Observation | Evidence-based interpretation | Next action |
 |---|---|---|
 | 268,590 checks with discounts, 12.5343% overall | Global weighted rate differs from mean daily rate (12.6161%) and mean location rate (12.5964%) | Compare like-for-like rates and volumes |
-| 3,856 empty payment lists, 0.1800% of checks | Missing payment records require reconciliation; they do not establish an unpaid bill | Review source-system lifecycle and the most concentrated locations |
-| Locations 87, 1 and 141 account for 71.08% of empty-payment cases (Phase 2 Gold export; first seen in Week 4) | Concentration identifies where investigation may have the highest yield. Case shares are 34.62%, 24.07% and 12.40%; local empty-payment rates are 4.56%, 3.42% and 3.61%, against 0.18% overall | Review the source-system lifecycle of these checks at the three locations first |
+| 3,856 empty payment lists, 0.1800% of checks | Missing payment records require reconciliation; they do not establish an unpaid bill | Review source-system lifecycle |
+| Locations 87, 1 and 141 account for 71.08% of empty-payment cases | Concentration shows where investigation may have the highest yield. Case shares are 34.62%, 24.07% and 12.40%; local empty-payment rates are 4.56%, 3.42% and 3.61%, against 0.18% overall | Review these checks at the three locations first |
+| 77,856 checks above the IQR tip threshold of 17.5 (Q1 = 0, Q3 = 7, available-tip population) | Statistical outliers; many zero tips lower the threshold, and a large tip may fit a large bill | Compare tips with check amount before drawing conclusions |
 | Three checks have positive aggregate tip values | Sign convention exceptions deserve targeted review | Use date + location + check ID + payment actor and source file in private evidence |
 | Ticket/item discount events: 240,699 / 275,991 | Event counts are different from unique discounted checks | Keep levels separate and validate monetary overlap before summing |
 
-The accepted runtime now reproduces coverage, discounted-check and event counts.
-The [Gold query export](src/transformations/gold/runtime_gold_evidence.csv) confirms
-the top-three location concentration, tip magnitude statistics and measured IQR
-threshold. See [verified business findings](src/transformations/gold/BUSINESS_FINDINGS.md)
-for denominators, limitations and operational recommendations. The three positive
-tip cases also appear in the pipeline output screenshot. Their detailed actor/check
-records remain private in Databricks.
-No model accuracy, reduction in losses or detected-fraud count is claimed.
+See [business findings](docs/BUSINESS_FINDINGS.md) for denominators, limitations and
+recommendations. No model accuracy, reduction in losses or detected-fraud count is claimed.
 
-## Submission
+## Verified execution (October 29, 2026)
 
-- [Rubric-to-evidence checklist](src/transformations/gold/RUBRIC_EVIDENCE.md)
-- [Five-minute English presentation script](src/transformations/gold/PRESENTATION_SCRIPT_EN.md)
-- [English slide deck](src/transformations/gold/Applebees_Phase2_EN.pptx): eight main slides and two question appendices, updated with verified job evidence.
-- [Demonstration SQL](src/transformations/gold/demo_queries.sql)
-- [Deployment/run instructions](src/transformations/gold/RUNBOOK_ES.md)
+| Runtime observation | Verified result |
+|---|---|
+| Job / complete runs | `54448068766203` / `469997930036472` and `904398544867578` |
+| Observed job durations | 19 min 34 s and 21 min 23 s |
+| Source = assessed = published checks | 2,142,846 each, from 115 original files |
+| Quarantined, out-of-scope, corrupt checks and missing dates | 0 |
+| Audit results | 28/28 passed in both runs, plus the prior manual run |
+| Discounted checks | 268,590 |
+| Ticket / item discount events | 240,699 / 275,991 |
+| Payment events | 2,232,092 |
+| Empty payment lists retained | 3,856 |
+| Fingerprints | Source and published-check fingerprints match across both runs and the manual run |
+
+Evidence: [runtime_evidence.json](evidence/runtime_evidence.json),
+[job 1 audit](evidence/runtime_job_1_validation.csv),
+[job 2 audit](evidence/runtime_job_2_validation.csv),
+[manual audit](evidence/runtime_manual_validation.csv) and
+[Gold export](evidence/runtime_gold_evidence.csv). These exports contain no individual
+check or employee records. Folder guide: [evidence/README.md](evidence/README.md).
+
+## How to run
+
+1. Upload the dataset to the Unity Catalog volume
+   `/Volumes/workspace/applebees_raw/source/applebees_source` (keep `dimensions/` and `facts/`).
+2. Create a Databricks Git folder from this repository and follow the
+   [step-by-step runbook (Spanish)](docs/RUNBOOK_ES.md), or deploy with the CLI:
+   `databricks bundle validate -t dev` then `databricks bundle deploy -t dev`.
+3. Run the job `applebees-phase2-daily-dev`. Inspect results with
+   [demo queries](src/queries/demo_queries.sql) and [diagnostics](src/queries/diagnose_pipeline.sql).
+
+Local checks (no Spark needed):
+
+```bash
+python -B tests/test_pipeline_contracts.py   # structure, YAML, notebooks, links, fixtures
+python -B tests/test_jsonl_preparation.py    # lossless, bounded JSONL conversion
+python tests/verify_sources.py PATH_TO_DATASET   # independent source audit
+```
+
+## Limitations and scope
+
+- Business semantics of `EmployeeId`, `ManagerId`, discount codes and tip currency are
+  not confirmed by Sun Holdings; actor IDs are treated as "actor recorded on the event".
+- The pipeline does not label fraud and has no machine-learning model.
+- Observability such as per-task timings, pipeline update IDs and clustering query
+  profiles was not captured. No performance, cost or accounting-accuracy gain is claimed.
+
+**Runtime history.** The first attempt exhausted Photon memory while scanning large
+JSON arrays; bounded JSONL preparation resolved it. A later update left an empty
+assessed table; the SQL diagnostic detected the gap and a full refresh restored all
+2,142,846 records (the cause of that intermediate state is not established). Both
+complete jobs and the unchanged-source comparison then passed.
+
+**Databricks Git folder compatibility.** The importable notebook `validate_pipeline.ipynb`
+and its source `validate_pipeline_source.py` have distinct base names because
+Databricks cannot store both with the same name in one folder. Text files use LF line
+endings, enforced by `.gitattributes` and checked by a repository test.
 
 ## Official technical references
 
@@ -225,38 +269,3 @@ No model accuracy, reduction in losses or detected-fraud count is claimed.
 - [Quarantine patterns](https://docs.databricks.com/aws/en/ldp/expectation-patterns)
 - [Job and serverless bundle examples](https://docs.databricks.com/aws/en/dev-tools/bundles/examples)
 - [JSON Lines and multiline JSON reading](https://docs.databricks.com/aws/en/query/formats/json)
-
-Runtime history: the first attempt exhausted Photon memory while scanning large
-JSON arrays. Bounded JSONL preparation resolved the scan issue. A subsequent
-completed update had an empty assessed table. The SQL diagnostic detected the
-population gap, and a full refresh restored all 2,142,846 records. The cause of
-that intermediate empty state is not established. The complete job and its
-unchanged-source comparison subsequently passed.
-
-Core technical acceptance is complete: two successful whole-job runs, reconciled
-populations, unchanged-input fingerprints and an exported Gold analysis. Additional
-observability, such as per-task timings, pipeline update IDs and clustering query
-profiles, was not captured. No performance uplift, cost saving, accounting accuracy
-or fraud-detection accuracy is claimed. The repository is public, so evaluators can
-open the link without an invitation. Raw POS files, employee dimensions and
-individual check or actor records remain outside GitHub.
-
-## Databricks Git folder compatibility
-
-The importable notebook is `validate_pipeline.ipynb`; its source counterpart has
-the distinct name `validate_pipeline_source.py`. Databricks cannot store a source
-notebook and an IPYNB with the same base name in one folder. Text uses LF line
-endings in the actual blob contents, checked by a repository test and enforced by
-`.gitattributes`. Historical blobs were explicitly renormalized; attributes alone
-do not rewrite files already stored with CRLF.
-
-If an earlier clone shows missing folders or unexpected local changes, preserve
-that clone and create a fresh Git folder from `main` under a new workspace name,
-such as `applebees-phase2-code`. Keep sparse checkout off. Then select the pipeline
-libraries from the new Git folder. This changes workspace paths, not GitHub structure.
-
-If a pull reports success but the Git dialog still shows an old commit, inspect
-the actual Git status in the web terminal. Preserve uncommitted work with
-`git stash push --include-untracked -m backup-before-jsonl-update` before a normal
-`git pull --ff-only origin main`. Keep that stash until changes have been reviewed;
-do not automatically reapply older code over the updated pipeline libraries.

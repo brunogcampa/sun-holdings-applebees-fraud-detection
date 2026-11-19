@@ -9,7 +9,7 @@ import hashlib
 import time
 
 import sys
-base = Path(sys.argv[1]).resolve() if len(sys.argv)>1 and not sys.argv[1].startswith(chr(45)) else Path(__file__).resolve().parents[3]
+base = Path(sys.argv[1]).resolve() if len(sys.argv)>1 and not sys.argv[1].startswith(chr(45)) else Path(__file__).resolve().parents[1]
 out = base / 'phase2/evidence'
 
 
